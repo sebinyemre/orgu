@@ -1,6 +1,8 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
+import { useMsgs } from '@/i18n';
+import { COMMON } from '@/i18n/common';
 
 interface Props {
   open: boolean;
@@ -16,6 +18,7 @@ interface Props {
 
 /** Erişilebilir modal: Esc ile kapanır, odak içeride tutulur, telefonda alt sayfa. */
 export function Modal({ open, onClose, title, children, footer, wide, sheet = true }: Props) {
+  const t = useMsgs(COMMON);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -58,7 +61,7 @@ export function Modal({ open, onClose, title, children, footer, wide, sheet = tr
         {title && (
           <div className="modal-header">
             <h2>{title}</h2>
-            <button className="btn btn-ghost btn-icon btn-sm" onClick={onClose} aria-label="Kapat">
+            <button className="btn btn-ghost btn-icon btn-sm" onClick={onClose} aria-label={t.close}>
               <X />
             </button>
           </div>

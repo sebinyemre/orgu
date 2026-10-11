@@ -1,8 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Settings } from '@/types';
+import type { Lang, Settings } from '@/types';
+
+/** Tarayıcı dilinden ilk dil tahmini */
+export function detectLang(): Lang {
+  const nav = typeof navigator !== 'undefined' ? (navigator.languages?.[0] ?? navigator.language ?? 'en') : 'en';
+  const code = nav.toLowerCase().slice(0, 2);
+  return code === 'tr' || code === 'es' || code === 'pt' ? code : 'en';
+}
 
 export const DEFAULT_SETTINGS: Settings = {
+  lang: detectLang(),
+  crochetEn: 'us',
   trabzan: 'ipatma',
   units: 'cm',
   theme: 'auto',

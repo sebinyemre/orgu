@@ -885,3 +885,29 @@ button.swatch[aria-pressed='true'] {
 .modal:focus {
   outline: none;
 }
+
+/* Tarif içindeki "nasıl yapılır" bağlantısı */
+.technique-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline dotted var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.technique-link svg {
+  width: 15px;
+  height: 15px;
+  color: var(--accent);
+  flex: none;
+}
+.technique-link:hover {
+  color: var(--accent);
+}

@@ -1,5 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { useMsgs } from '@/i18n';
+import { COMMON } from '@/i18n/common';
 
 interface FieldProps {
   label: ReactNode;
@@ -93,10 +95,11 @@ interface StepperProps {
 
 /** – [ 12 ] + */
 export function Stepper({ value, onChange, min = 0, max = 99999, step = 1, ariaLabel }: StepperProps) {
+  const t = useMsgs(COMMON);
   const set = (n: number) => onChange(Math.min(max, Math.max(min, Math.round(n / step) * step)));
   return (
     <div className="stepper" role="group" aria-label={ariaLabel}>
-      <button type="button" onClick={() => set(value - step)} aria-label="Azalt" disabled={value <= min}>
+      <button type="button" onClick={() => set(value - step)} aria-label={t.decrease} disabled={value <= min}>
         <Minus size={16} />
       </button>
       <input
@@ -108,7 +111,7 @@ export function Stepper({ value, onChange, min = 0, max = 99999, step = 1, ariaL
           if (Number.isFinite(n)) set(n);
         }}
       />
-      <button type="button" onClick={() => set(value + step)} aria-label="Artır" disabled={value >= max}>
+      <button type="button" onClick={() => set(value + step)} aria-label={t.increase} disabled={value >= max}>
         <Plus size={16} />
       </button>
     </div>

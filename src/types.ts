@@ -2,6 +2,9 @@
    Paylaşılan veri tipleri. Tüm modüller bu sözleşmeye göre konuşur.
    ────────────────────────────────────────────────────────────── */
 
+/** Arayüz dili */
+export type Lang = 'tr' | 'en' | 'es' | 'pt';
+
 /** Zanaat: şiş (düz/misinalı/çorap şişi) ya da tığ */
 export type Craft = 'knit' | 'crochet';
 
@@ -152,6 +155,10 @@ export interface PatternStep {
   id: string;
   /** "3. tur", "1.–4. sıra" gibi */
   label: string;
+  /**
+   * Adım metni. Teknik bağlantısı için [[dersId|görünen metin]] ya da [[dersId]] yazılır;
+   * PatternView bunları dokunulabilir "nasıl yapılır" bağlantısına çevirir.
+   */
   text: string;
   /** adım sonunda iğnede/turda olması gereken ilmek sayısı */
   count?: number;
@@ -265,6 +272,9 @@ export type TrabzanConvention = 'ipatma' | 'ingilizce';
 export type ThemeSetting = 'auto' | 'light' | 'dark';
 
 export interface Settings {
+  lang: Lang;
+  /** İngilizce tığ terimleri: ABD ya da Birleşik Krallık */
+  crochetEn: 'us' | 'uk';
   trabzan: TrabzanConvention;
   units: Units;
   theme: ThemeSetting;
@@ -272,7 +282,7 @@ export interface Settings {
   counterSound: boolean;
   counterVibrate: boolean;
   keepAwake: boolean;
-  /** tığ terimlerinin yanında US/UK kısaltmasını göster */
+  /** tığ terimlerinin yanında US kısaltmasını göster (İngilizce dışındaki dillerde) */
   showEnglish: boolean;
   /** animasyon hızı çarpanı */
   animSpeed: number;

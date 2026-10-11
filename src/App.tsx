@@ -9,6 +9,11 @@ import { Onboarding } from '@/features/settings/Onboarding';
 export default function App() {
   const theme = useSettings((s) => s.theme);
   const leftHanded = useSettings((s) => s.leftHanded);
+  const lang = useSettings((s) => s.lang);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   useEffect(() => {
     applyTheme(theme);

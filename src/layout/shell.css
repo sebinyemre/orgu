@@ -4,6 +4,79 @@
   min-height: 100dvh;
 }
 
+/* İki dünya: Öğren (kiremit) ve Yarat (denim). Vurgu rengi dünyaya göre değişir. */
+.shell[data-world='create'] {
+  --accent: var(--denim);
+  --accent-hover: color-mix(in srgb, var(--denim) 85%, black);
+  --accent-soft: var(--denim-soft);
+}
+
+.world-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  gap: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--paper-3);
+  margin: 0 var(--space-1) var(--space-4);
+}
+.world-switch button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--ink-2);
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.world-switch button svg {
+  width: 17px;
+  height: 17px;
+}
+.world-switch button[aria-selected='true'][data-w='learn'] {
+  background: var(--terracotta);
+  color: #fffaf5;
+  box-shadow: var(--shadow-sm);
+}
+.world-switch button[aria-selected='true'][data-w='create'] {
+  background: var(--denim);
+  color: #fffaf5;
+  box-shadow: var(--shadow-sm);
+}
+.world-switch.compact {
+  margin: 0;
+  padding: 3px;
+  gap: 2px;
+}
+.world-switch.compact button {
+  padding: 6px 10px;
+  font-size: 0.78rem;
+}
+.world-switch.compact button svg {
+  width: 15px;
+  height: 15px;
+}
+@media (max-width: 380px) {
+  .world-switch.compact button svg {
+    display: none;
+  }
+}
+.topbar-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .sidebar {
   display: none;
 }
@@ -236,5 +309,13 @@
 @keyframes spin-ball {
   to {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 420px) {
+  .topbar-title {
+    display: none;
+  }
+  .topbar .world-switch {
+    margin-left: auto;
   }
 }

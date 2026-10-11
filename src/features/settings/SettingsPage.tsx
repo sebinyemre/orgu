@@ -8,16 +8,21 @@ import { PageHeader } from '@/ui/PageHeader';
 import { Segmented } from '@/ui/Segmented';
 import { Switch } from '@/ui/Field';
 import { Callout } from '@/ui/Callout';
-import { TrabzanChooser } from './TrabzanChooser';
+import { useLang, useMsgs } from '@/i18n';
+import { CrochetTermsChooser } from './CrochetTermsChooser';
+import { LanguagePicker } from './LanguagePicker';
+import { SET } from './i18n';
 import type { ThemeSetting, Units } from '@/types';
 
 export default function SettingsPage() {
   const s = useSettings();
+  const t = useMsgs(SET);
+  const lang = useLang();
 
   const doExport = () => {
     const d = new Date().toISOString().slice(0, 10);
-    downloadJSON(exportAll(), `ilmek-ilmek-yedek-${d}.json`);
-    toast('Yedek indirildi');
+    downloadJSON(exportAll(), `ilmek-ilmek-${d}.json`);
+    toast(t.exported);
   };
 
   const doImport = async () => {
@@ -27,16 +32,16 @@ export default function SettingsPage() {
     try {
       data = JSON.parse(await f.text());
     } catch {
-      toast('Dosya okunamadı');
+      toast(t.readError);
       return;
     }
-    if (!(await confirmDialog('Yedekteki veriler şu anki projelerinin, iplerinin ve grafiklerinin yerine geçecek.', { title: 'Yedek geri yüklensin mi?', confirmLabel: 'Geri yükle', danger: true }))) return;
+    if (!(await confirmDialog(t.importText, { title: t.importTitle, confirmLabel: t.importConfirm, danger: true }))) return;
     const r = importAll(data);
-    toast(r.ok ? 'Yedek geri yüklendi' : r.error);
+    toast(r.ok ? t.imported : t.readError);
   };
 
   const wipe = async () => {
-    if (!(await confirmDialog('Tüm projeler, grafikler, sayaçlar ve ip sepeti bu cihazdan silinecek. Önce yedek almanı öneririm.', { title: 'Her şey silinsin mi?', confirmLabel: 'Hepsini sil', danger: true }))) return;
+    if (!(await confirmDialog(t.wipeText, { title: t.wipeTitle, confirmLabel: t.wipeConfirm, danger: true }))) return;
     Object.keys(localStorage)
       .filter((k) => k.startsWith('ilmek.'))
       .forEach((k) => localStorage.removeItem(k));
@@ -45,71 +50,72 @@ export default function SettingsPage() {
 
   return (
     <div className="page" style={{ maxWidth: 860 }}>
-      <PageHeader eyebrow="atölye" title="Ayarlar" lede="Terimler, görünüm, sayaç davranışı ve verilerinin yedeği." />
+      <PageHeader title={t.title} lede={t.lede} />
 
-      <h2 className="section-title">Tığ terimleri</h2>
+      <h2 className="section-title">{t.language}</h2>
+      <LanguagePicker />
+
+      <h2 className="section-title">{t.crochetTerms}</h2>
       <div className="stack">
-        <TrabzanChooser />
-        <Switch checked={s.showEnglish} onChange={(v) => s.set({ showEnglish: v })} label="İngilizce kısaltmaları da göster" hint="Terimlerin yanında küçük bir 'US dc' etiketi görünür. İngilizce tarif okurken işe yarar." />
-        <Callout tone="prof">
-          Bir tarifte "trabzan" gördüğünde ilk soru şudur: <b>kaç kez ip atılıyor?</b> İngilizce tariflerde de US ve UK adları farklıdır (US "single crochet" = UK "double crochet"). Bu yüzden atölyede her terimin yanında ip atma sayısını görürsün.
-        </Callout>
+        <CrochetTermsChooser />
+        <Switch checked={s.showEnglish} onChange={(v) => s.set({ showEnglish: v })} label={t.showEnglish} hint={t.showEnglishHint} />
+        <Callout tone="prof">{t.profNote}</Callout>
       </div>
 
-      <h2 className="section-title">Görünüm</h2>
+      <h2 className="section-title">{t.appearance}</h2>
       <div className="stack">
         <div className="field">
-          <span className="label">Tema</span>
+          <span className="label">{t.theme}</span>
           <Segmented<ThemeSetting>
             value={s.theme}
             onChange={(v) => s.set({ theme: v })}
             options={[
-              { value: 'auto', label: <><SunMoon /> Otomatik</> },
-              { value: 'light', label: <><Sun /> Gündüz</> },
-              { value: 'dark', label: <><Moon /> Gece örgüsü</> },
+              { value: 'auto', label: <><SunMoon /> {t.themeAuto}</> },
+              { value: 'light', label: <><Sun /> {t.themeLight}</> },
+              { value: 'dark', label: <><Moon /> {t.themeDark}</> },
             ]}
           />
         </div>
         <div className="field">
-          <span className="label">Ölçü birimi</span>
+          <span className="label">{t.units}</span>
           <Segmented<Units>
             value={s.units}
             onChange={(v) => s.set({ units: v })}
             options={[
-              { value: 'cm', label: 'Santimetre' },
-              { value: 'in', label: 'İnç' },
+              { value: 'cm', label: t.unitsCm },
+              { value: 'in', label: t.unitsIn },
             ]}
           />
         </div>
-        <Switch checked={s.leftHanded} onChange={(v) => s.set({ leftHanded: v })} label="Solak modu" hint="Ders animasyonları aynalanır." />
+        <Switch checked={s.leftHanded} onChange={(v) => s.set({ leftHanded: v })} label={t.leftHanded} hint={t.leftHandedHint} />
         <div className="field" style={{ maxWidth: 360 }}>
-          <span className="label">Animasyon hızı: {s.animSpeed.toLocaleString('tr-TR')}×</span>
+          <span className="label">{t.animSpeed(s.animSpeed.toLocaleString(lang))}</span>
           <input type="range" min={0.5} max={2} step={0.25} value={s.animSpeed} onChange={(e) => s.set({ animSpeed: Number(e.target.value) })} />
         </div>
       </div>
 
-      <h2 className="section-title">Sayaçlar ve takip</h2>
+      <h2 className="section-title">{t.countersTitle}</h2>
       <div className="stack">
-        <Switch checked={s.counterSound} onChange={(v) => s.set({ counterSound: v })} label="Tık sesi" hint="Mekanik sayaç gibi küçük bir tık." />
-        <Switch checked={s.counterVibrate} onChange={(v) => s.set({ counterVibrate: v })} label="Titreşim" hint="Destekleyen telefonlarda her artışta kısa titreşim; hatırlatıcıda uzun." />
-        <Switch checked={s.keepAwake} onChange={(v) => s.set({ keepAwake: v })} label="Takip modunda ekranı açık tut" hint="Elin şişteyken telefon kararmasın." />
+        <Switch checked={s.counterSound} onChange={(v) => s.set({ counterSound: v })} label={t.sound} hint={t.soundHint} />
+        <Switch checked={s.counterVibrate} onChange={(v) => s.set({ counterVibrate: v })} label={t.vibrate} hint={t.vibrateHint} />
+        <Switch checked={s.keepAwake} onChange={(v) => s.set({ keepAwake: v })} label={t.keepAwake} hint={t.keepAwakeHint} />
       </div>
 
-      <h2 className="section-title">Verilerin</h2>
-      <Callout tone="info">Her şey yalnızca bu cihazda, tarayıcında saklanır. Telefon değiştirirken ya da tarayıcı verisini silmeden önce yedek al.</Callout>
+      <h2 className="section-title">{t.data}</h2>
+      <Callout tone="info">{t.dataInfo}</Callout>
       <div className="row" style={{ marginTop: 'var(--space-3)' }}>
         <button className="btn btn-primary" onClick={doExport}>
-          <Download /> Yedek indir
+          <Download /> {t.exportBtn}
         </button>
         <button className="btn" onClick={doImport}>
-          <Upload /> Yedekten geri yükle
+          <Upload /> {t.importBtn}
         </button>
         <button className="btn btn-danger" onClick={wipe}>
-          <RotateCcw /> Her şeyi sıfırla
+          <RotateCcw /> {t.wipeBtn}
         </button>
       </div>
       <p className="hint" style={{ marginTop: 'var(--space-3)' }}>
-        Not: Proje fotoğrafları cihazda ayrı bir alanda tutulur ve yedek dosyasına dahil edilmez.
+        {t.photosNote}
       </p>
     </div>
   );

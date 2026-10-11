@@ -12,6 +12,8 @@ const StitchLibraryPage = p(() => import('@/features/library/StitchLibraryPage')
 const StitchPatternPage = p(() => import('@/features/library/StitchPatternPage'));
 const GlossaryPage = p(() => import('@/features/library/GlossaryPage'));
 const ToolsPage = p(() => import('@/features/tools/ToolsPage'));
+const WorksPage = p(() => import('@/features/works/WorksPage'));
+const WorkPage = p(() => import('@/features/works/WorkPage'));
 const ChartListPage = p(() => import('@/features/chart/ChartListPage'));
 const ChartEditorPage = p(() => import('@/features/chart/ChartEditorPage'));
 const ChartTrackPage = p(() => import('@/features/chart/ChartTrackPage'));
@@ -35,6 +37,8 @@ export const routes: RouteObject[] = [
       { path: '/desenler/:patternId', element: <StitchPatternPage /> },
       { path: '/sozluk', element: <GlossaryPage /> },
       { path: '/araclar', element: <ToolsPage /> },
+      { path: '/yarat', element: <WorksPage /> },
+      { path: '/yarat/:workId', element: <WorkPage /> },
       { path: '/kareli', element: <ChartListPage /> },
       { path: '/kareli/:chartId', element: <ChartEditorPage /> },
       { path: '/kareli/:chartId/takip', element: <ChartTrackPage /> },

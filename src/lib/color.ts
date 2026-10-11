@@ -1,4 +1,6 @@
 /** Renk yardımcıları (hex ↔ rgb/hsl, parlaklık, kontrast, uyum) */
+import type { Lang } from '@/types';
+import { YARN_SWATCHES } from '@/knowledge/swatches';
 
 export interface RGB {
   r: number;
@@ -119,56 +121,18 @@ export function colorDistance(a: string, b: string): number {
   return Math.sqrt((2 + rm / 256) * dr * dr + 4 * dg * dg + (2 + (255 - rm) / 256) * db * db);
 }
 
-/** Bilinen ip renkleri için yaklaşık Türkçe ad */
-const NAMED: [string, string][] = [
-  ['#ffffff', 'Beyaz'],
-  ['#f5f0e6', 'Ekru'],
-  ['#e8dcc4', 'Bej'],
-  ['#c8b49a', 'Vizon'],
-  ['#8b6f4e', 'Taba'],
-  ['#5c3d2e', 'Kahve'],
-  ['#000000', 'Siyah'],
-  ['#4a4a4a', 'Füme'],
-  ['#9e9e9e', 'Gri'],
-  ['#d0d0d0', 'Açık gri'],
-  ['#c0392b', 'Kırmızı'],
-  ['#8e1b2a', 'Bordo'],
-  ['#e97c6a', 'Mercan'],
-  ['#f4a7b9', 'Pembe'],
-  ['#f8d3dc', 'Pudra'],
-  ['#d9467a', 'Fuşya'],
-  ['#b5523b', 'Kiremit'],
-  ['#e67e22', 'Turuncu'],
-  ['#f2c84b', 'Sarı'],
-  ['#d39a2c', 'Hardal'],
-  ['#fff3b0', 'Limon'],
-  ['#7fb069', 'Fıstık yeşili'],
-  ['#2e7d32', 'Yeşil'],
-  ['#1f4d3a', 'Zümrüt'],
-  ['#5f7a61', 'Adaçayı'],
-  ['#8a9a5b', 'Haki'],
-  ['#9fd8cb', 'Mint'],
-  ['#2a9d8f', 'Petrol'],
-  ['#87ceeb', 'Bebe mavisi'],
-  ['#3a7bd5', 'Mavi'],
-  ['#46698a', 'Denim'],
-  ['#1b2a4a', 'Lacivert'],
-  ['#b39ddb', 'Lila'],
-  ['#7d4e6d', 'Mürdüm'],
-  ['#5e2b7e', 'Mor'],
-];
-
-export function nameColor(hex: string): string {
-  let best = NAMED[0];
+/** En yakın hazır ip renginin adı (geçerli dilde) */
+export function nameColor(hex: string, lang: Lang): string {
+  let best = YARN_SWATCHES[0];
   let bd = Infinity;
-  for (const n of NAMED) {
-    const d = colorDistance(hex, n[0]);
+  for (const n of YARN_SWATCHES) {
+    const d = colorDistance(hex, n.hex);
     if (d < bd) {
       bd = d;
       best = n;
     }
   }
-  return best[1];
+  return best.name[lang];
 }
 
 /** Uyumlu renk önerileri */

@@ -1,19 +1,20 @@
 /**
- * Tığ temel ilmekleri ve trabzan adlandırma sistemleri.
+ * Tığ temel ilmekleri, dillere ve geleneklere göre adları; şiş temel terimleri.
  *
- * Türkçe kaynaklarda iki sistem birlikte yaşar:
- *  - 'ipatma'   → adı ip atma sayısından gelir: trabzan (1 ip atma = US dc), ikili trabzan (2 = US tr),
- *                 üçlü trabzan (3 = US dtr), dörtlü trabzan (4 = US trtr).
- *  - 'ingilizce'→ İngilizce adlarla eşleşir: yarım trabzan = hdc, ikili trabzan = dc, üçlü = tr, dörtlü = dtr.
- * Kanonik kimlik olarak US kısaltmaları kullanılır; ekranda kullanıcının sistemine göre ad gösterilir.
+ * Tığ adları "lehçeye" göre değişir:
+ *  - tr-ipatma   : trabzan = 1 ip atma (US dc), ikili = 2 (US tr), üçlü = 3 (US dtr)
+ *  - tr-ingilizce: yarım trabzan = hdc, ikili trabzan = dc, üçlü = tr, dörtlü = dtr
+ *  - en-us / en-uk: ABD ve Birleşik Krallık adları (US sc = UK dc!)
+ *  - es, pt      : İspanyolca ve Portekizce (Brezilya) standart adları
+ * Kanonik kimlik olarak US kısaltmaları kullanılır.
  */
-import type { TrabzanConvention } from '@/types';
+import type { Lang, TrabzanConvention } from '@/types';
 
 export type CrochetBasicId = 'ch' | 'slst' | 'sc' | 'hdc' | 'dc' | 'tr' | 'dtr' | 'trtr';
 
 export interface CrochetBasic {
   id: CrochetBasicId;
-  /** tığa ilmeğe batmadan önce kaç kez ip atılır */
+  /** ilmeğe batmadan önce kaç kez ip atılır */
   yarnOvers: number;
   /** sık iğne cinsinden yaklaşık yükseklik */
   heightSc: number;
@@ -41,56 +42,75 @@ export const CROCHET_BASICS: Record<CrochetBasicId, CrochetBasic> = {
   trtr: { id: 'trtr', yarnOvers: 4, heightSc: 5, turningCh: 6, turningCounts: true, firstInChainFromHook: 7, us: 'trtr', uk: 'qtr', usName: 'triple treble crochet', ukName: 'quadruple treble', symbol: 'trtr' },
 };
 
-const NAMES: Record<TrabzanConvention, Record<CrochetBasicId, string>> = {
-  ipatma: {
-    ch: 'Zincir',
-    slst: 'Kör ilmek',
-    sc: 'Sık iğne',
-    hdc: 'Yarım trabzan',
-    dc: 'Trabzan',
-    tr: 'İkili trabzan',
-    dtr: 'Üçlü trabzan',
-    trtr: 'Dörtlü trabzan',
-  },
-  ingilizce: {
-    ch: 'Zincir',
-    slst: 'Kör ilmek',
-    sc: 'Sık iğne',
-    hdc: 'Yarım trabzan',
-    dc: 'İkili trabzan',
-    tr: 'Üçlü trabzan',
-    dtr: 'Dörtlü trabzan',
-    trtr: 'Beşli trabzan',
-  },
+export type CrochetDialect = 'tr-ipatma' | 'tr-ingilizce' | 'en-us' | 'en-uk' | 'es' | 'pt';
+
+/** Terim bağlamı: dil + o dildeki gelenek */
+export interface TermsCtx {
+  lang: Lang;
+  trabzan: TrabzanConvention;
+  crochetEn: 'us' | 'uk';
+}
+
+export function dialectOf(c: TermsCtx): CrochetDialect {
+  if (c.lang === 'tr') return c.trabzan === 'ipatma' ? 'tr-ipatma' : 'tr-ingilizce';
+  if (c.lang === 'en') return c.crochetEn === 'uk' ? 'en-uk' : 'en-us';
+  return c.lang;
+}
+
+const NAMES: Record<CrochetDialect, Record<CrochetBasicId, string>> = {
+  'tr-ipatma': { ch: 'Zincir', slst: 'Kör ilmek', sc: 'Sık iğne', hdc: 'Yarım trabzan', dc: 'Trabzan', tr: 'İkili trabzan', dtr: 'Üçlü trabzan', trtr: 'Dörtlü trabzan' },
+  'tr-ingilizce': { ch: 'Zincir', slst: 'Kör ilmek', sc: 'Sık iğne', hdc: 'Yarım trabzan', dc: 'İkili trabzan', tr: 'Üçlü trabzan', dtr: 'Dörtlü trabzan', trtr: 'Beşli trabzan' },
+  'en-us': { ch: 'Chain', slst: 'Slip stitch', sc: 'Single crochet', hdc: 'Half double crochet', dc: 'Double crochet', tr: 'Treble crochet', dtr: 'Double treble', trtr: 'Triple treble' },
+  'en-uk': { ch: 'Chain', slst: 'Slip stitch', sc: 'Double crochet', hdc: 'Half treble', dc: 'Treble', tr: 'Double treble', dtr: 'Triple treble', trtr: 'Quadruple treble' },
+  es: { ch: 'Cadeneta', slst: 'Punto raso', sc: 'Punto bajo', hdc: 'Punto medio alto', dc: 'Punto alto', tr: 'Punto alto doble', dtr: 'Punto alto triple', trtr: 'Punto alto cuádruple' },
+  pt: { ch: 'Correntinha', slst: 'Ponto baixíssimo', sc: 'Ponto baixo', hdc: 'Meio ponto alto', dc: 'Ponto alto', tr: 'Ponto alto duplo', dtr: 'Ponto alto triplo', trtr: 'Ponto alto quádruplo' },
 };
 
-const ABBR: Record<TrabzanConvention, Record<CrochetBasicId, string>> = {
-  ipatma: { ch: 'zn', slst: 'kİ', sc: 'sı', hdc: 'yt', dc: 'tr', tr: '2tr', dtr: '3tr', trtr: '4tr' },
-  ingilizce: { ch: 'zn', slst: 'kİ', sc: 'sı', hdc: 'yt', dc: '2tr', tr: '3tr', dtr: '4tr', trtr: '5tr' },
+const ABBR: Record<CrochetDialect, Record<CrochetBasicId, string>> = {
+  'tr-ipatma': { ch: 'zn', slst: 'kİ', sc: 'sı', hdc: 'yt', dc: 'tr', tr: '2tr', dtr: '3tr', trtr: '4tr' },
+  'tr-ingilizce': { ch: 'zn', slst: 'kİ', sc: 'sı', hdc: 'yt', dc: '2tr', tr: '3tr', dtr: '4tr', trtr: '5tr' },
+  'en-us': { ch: 'ch', slst: 'sl st', sc: 'sc', hdc: 'hdc', dc: 'dc', tr: 'tr', dtr: 'dtr', trtr: 'trtr' },
+  'en-uk': { ch: 'ch', slst: 'ss', sc: 'dc', hdc: 'htr', dc: 'tr', tr: 'dtr', dtr: 'trtr', trtr: 'qtr' },
+  es: { ch: 'cad', slst: 'pr', sc: 'pb', hdc: 'pma', dc: 'pa', tr: 'pad', dtr: 'pat', trtr: 'pac' },
+  pt: { ch: 'corr', slst: 'pbx', sc: 'pb', hdc: 'mpa', dc: 'pa', tr: 'pad', dtr: 'pat', trtr: 'paq' },
 };
 
-/** "Trabzan" / "İkili trabzan" … kullanıcının sistemine göre */
-export function crochetName(id: CrochetBasicId, conv: TrabzanConvention): string {
-  return NAMES[conv][id];
+const LOCALE: Record<Lang, string> = { tr: 'tr-TR', en: 'en-US', es: 'es-ES', pt: 'pt-BR' };
+
+/** "Trabzan", "Double crochet", "Punto alto" … */
+export function crochetName(id: CrochetBasicId, ctx: TermsCtx): string {
+  return NAMES[dialectOf(ctx)][id];
 }
 
-/** küçük harfle başlayan ad: cümle içinde kullanmak için ("3 trabzan ör") */
-export function crochetNameLower(id: CrochetBasicId, conv: TrabzanConvention): string {
-  const n = NAMES[conv][id];
-  return n.charAt(0).toLocaleLowerCase('tr-TR') + n.slice(1);
+/** cümle içinde kullanmak için küçük harfle başlayan ad */
+export function crochetNameLower(id: CrochetBasicId, ctx: TermsCtx): string {
+  const n = NAMES[dialectOf(ctx)][id];
+  return n.charAt(0).toLocaleLowerCase(LOCALE[ctx.lang]) + n.slice(1);
 }
 
-export function crochetAbbr(id: CrochetBasicId, conv: TrabzanConvention): string {
-  return ABBR[conv][id];
+export function crochetAbbr(id: CrochetBasicId, ctx: TermsCtx): string {
+  return ABBR[dialectOf(ctx)][id];
 }
 
-/** "Trabzan (US dc · 1 ip atma)" */
-export function crochetLabel(id: CrochetBasicId, conv: TrabzanConvention, withEnglish = true): string {
+const YO_WORD: Record<Lang, (n: number) => string> = {
+  tr: (n) => `${n} ip atma`,
+  en: (n) => `${n} yarn over${n > 1 ? 's' : ''}`,
+  es: (n) => `${n} lazada${n > 1 ? 's' : ''}`,
+  pt: (n) => `${n} laçada${n > 1 ? 's' : ''}`,
+};
+
+/** "Trabzan (US dc · 1 ip atma)" — İngilizcede US/UK karşılığını gösterir */
+export function crochetLabel(id: CrochetBasicId, ctx: TermsCtx, withRef = true): string {
   const b = CROCHET_BASICS[id];
-  const name = crochetName(id, conv);
-  if (!withEnglish) return name;
-  const yo = b.yarnOvers > 0 ? ` · ${b.yarnOvers} ip atma` : '';
+  const name = crochetName(id, ctx);
+  if (!withRef || id === 'ch') return name;
+  const yo = b.yarnOvers > 0 ? ` · ${YO_WORD[ctx.lang](b.yarnOvers)}` : '';
+  if (ctx.lang === 'en') return ctx.crochetEn === 'uk' ? `${name} (US ${b.us}${yo})` : `${name} (UK ${b.uk}${yo})`;
   return `${name} (US ${b.us}${yo})`;
+}
+
+export function yarnOverText(n: number, lang: Lang): string {
+  return YO_WORD[lang](n);
 }
 
 export const CONVENTION_INFO: Record<TrabzanConvention, { title: string; summary: string }> = {
@@ -104,30 +124,134 @@ export const CONVENTION_INFO: Record<TrabzanConvention, { title: string; summary
   },
 };
 
-/* ── Sık kullanılan genel terimler ─────────────────────── */
-export const KNIT_TERMS = {
-  k: { tr: 'düz', abbr: 'd', us: 'k', usName: 'knit' },
-  p: { tr: 'ters', abbr: 't', us: 'p', usName: 'purl' },
-  yo: { tr: 'ip at', abbr: 'ia', us: 'yo', usName: 'yarn over' },
-  k2tog: { tr: '2 ilmeği birlikte düz ör', abbr: '2bd', us: 'k2tog', usName: 'knit two together' },
-  ssk: { tr: 'kaydır, kaydır, birlikte düz ör', abbr: 'kkd', us: 'ssk', usName: 'slip slip knit' },
-  sl: { tr: 'ilmeği örmeden kaydır', abbr: 'kay', us: 'sl', usName: 'slip' },
-  co: { tr: 'ilmek at', abbr: '', us: 'CO', usName: 'cast on' },
-  bo: { tr: 'ilmek kapat', abbr: '', us: 'BO', usName: 'bind off' },
-  rs: { tr: 'ön yüz (sağ yüz)', abbr: 'ÖY', us: 'RS', usName: 'right side' },
-  ws: { tr: 'arka yüz (ters yüz)', abbr: 'AY', us: 'WS', usName: 'wrong side' },
-  pm: { tr: 'işaretleyici tak', abbr: '', us: 'pm', usName: 'place marker' },
-  sm: { tr: 'işaretleyiciyi kaydır', abbr: '', us: 'sm', usName: 'slip marker' },
-} as const;
-
-const PLACEHOLDER = /\{(ch|slst|sc|hdc|dc|tr|dtr|trtr)\}/g;
-
 /**
- * Metindeki {sc}, {dc} gibi yer tutucuları kullanıcının trabzan sistemine göre doldurur.
- * Büyük harfle başlatmak için {Dc} gibi yazılabilir.
+ * Metindeki {sc}, {dc} gibi yer tutucuları kullanıcının diline ve geleneğine göre doldurur.
+ * Cümle başında büyük harf için {Sc}, {Dc}; kısaltma için {sc.a}, {dc.a}.
  */
-export function fillTerms(text: string, conv: TrabzanConvention): string {
+export function fillTerms(text: string, ctx: TermsCtx): string {
   return text
-    .replace(/\{(Ch|Slst|Sc|Hdc|Dc|Tr|Dtr|Trtr)\}/g, (_, k: string) => crochetName(k.toLowerCase() as CrochetBasicId, conv))
-    .replace(PLACEHOLDER, (_, k: CrochetBasicId) => crochetNameLower(k, conv));
+    .replace(/\{(ch|slst|sc|hdc|dc|tr|dtr|trtr)\.a\}/g, (_, k: CrochetBasicId) => crochetAbbr(k, ctx))
+    .replace(/\{(Ch|Slst|Sc|Hdc|Dc|Tr|Dtr|Trtr)\}/g, (_, k: string) => crochetName(k.toLowerCase() as CrochetBasicId, ctx))
+    .replace(/\{(ch|slst|sc|hdc|dc|tr|dtr|trtr)\}/g, (_, k: CrochetBasicId) => crochetNameLower(k, ctx));
 }
+
+/* ── Şiş temel terimleri (tarif metinleri üretmek için) ───────────────── */
+export interface KnitVocab {
+  k: string;
+  p: string;
+  kAbbr: string;
+  pAbbr: string;
+  yo: string;
+  k2tog: string;
+  ssk: string;
+  sl: string;
+  castOn: string;
+  bindOff: string;
+  rs: string;
+  ws: string;
+  rsShort: string;
+  wsShort: string;
+  stitch: (n: number) => string;
+  row: (n: number) => string;
+  round: (n: number) => string;
+  rowWord: string;
+  roundWord: string;
+  repeat: string;
+  /** "*1 düz, 1 ters* tekrarla" kalıbındaki tekrar kelimesi */
+  repeatToEnd: string;
+}
+
+export const KNIT_VOCAB: Record<Lang, KnitVocab> = {
+  tr: {
+    k: 'düz',
+    p: 'ters',
+    kAbbr: 'd',
+    pAbbr: 't',
+    yo: 'ip at',
+    k2tog: '2 ilmeği birlikte düz ör',
+    ssk: 'kaydır, kaydır, birlikte düz ör',
+    sl: 'kaydır',
+    castOn: 'ilmek at',
+    bindOff: 'ilmek kapat',
+    rs: 'ön yüz',
+    ws: 'arka yüz',
+    rsShort: 'ÖY',
+    wsShort: 'AY',
+    stitch: (n) => `${n} ilmek`,
+    row: (n) => `${n}. sıra`,
+    round: (n) => `${n}. tur`,
+    rowWord: 'sıra',
+    roundWord: 'tur',
+    repeat: 'tekrarla',
+    repeatToEnd: 'sıra sonuna kadar tekrarla',
+  },
+  en: {
+    k: 'knit',
+    p: 'purl',
+    kAbbr: 'k',
+    pAbbr: 'p',
+    yo: 'yarn over',
+    k2tog: 'knit 2 together',
+    ssk: 'slip, slip, knit together',
+    sl: 'slip',
+    castOn: 'cast on',
+    bindOff: 'bind off',
+    rs: 'right side',
+    ws: 'wrong side',
+    rsShort: 'RS',
+    wsShort: 'WS',
+    stitch: (n) => `${n} stitch${n === 1 ? '' : 'es'}`,
+    row: (n) => `Row ${n}`,
+    round: (n) => `Round ${n}`,
+    rowWord: 'row',
+    roundWord: 'round',
+    repeat: 'repeat',
+    repeatToEnd: 'repeat to end',
+  },
+  es: {
+    k: 'derecho',
+    p: 'revés',
+    kAbbr: 'd',
+    pAbbr: 'r',
+    yo: 'lazada',
+    k2tog: 'tejer 2 puntos juntos al derecho',
+    ssk: 'deslizar, deslizar, tejer juntos',
+    sl: 'deslizar',
+    castOn: 'montar puntos',
+    bindOff: 'cerrar puntos',
+    rs: 'derecho de la labor',
+    ws: 'revés de la labor',
+    rsShort: 'LD',
+    wsShort: 'LR',
+    stitch: (n) => `${n} punto${n === 1 ? '' : 's'}`,
+    row: (n) => `Vuelta ${n}`,
+    round: (n) => `Vuelta ${n}`,
+    rowWord: 'vuelta',
+    roundWord: 'vuelta',
+    repeat: 'repetir',
+    repeatToEnd: 'repetir hasta el final',
+  },
+  pt: {
+    k: 'meia',
+    p: 'tricô',
+    kAbbr: 'm',
+    pAbbr: 't',
+    yo: 'laçada',
+    k2tog: 'tricotar 2 pontos juntos em meia',
+    ssk: 'deslizar, deslizar, tricotar juntos',
+    sl: 'deslizar',
+    castOn: 'montar os pontos',
+    bindOff: 'arrematar',
+    rs: 'lado direito',
+    ws: 'lado avesso',
+    rsShort: 'LD',
+    wsShort: 'LA',
+    stitch: (n) => `${n} ponto${n === 1 ? '' : 's'}`,
+    row: (n) => `Carreira ${n}`,
+    round: (n) => `Volta ${n}`,
+    rowWord: 'carreira',
+    roundWord: 'volta',
+    repeat: 'repetir',
+    repeatToEnd: 'repetir até o final',
+  },
+};

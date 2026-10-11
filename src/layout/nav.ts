@@ -1,54 +1,74 @@
 import type { LucideIcon } from 'lucide-react';
-import { BookA, Calculator, FolderHeart, GraduationCap, Grid3x3, NotebookPen, Palette, Settings, ShoppingBasket, SquareStack, Tally5, Wrench } from 'lucide-react';
+import { BookA, Calculator, FolderHeart, GraduationCap, Grid3x3, Layers, NotebookPen, Palette, Scissors, ShoppingBasket, SquareStack, Tally5, Wrench } from 'lucide-react';
+import type { COMMON } from '@/i18n/common';
+
+type MsgKey = { [K in keyof (typeof COMMON)['tr']]: (typeof COMMON)['tr'][K] extends string ? K : never }[keyof (typeof COMMON)['tr']];
+
+export type World = 'learn' | 'create';
 
 export interface NavItem {
   to: string;
-  label: string;
+  label: MsgKey;
   /** alt menüde kısa ad */
-  short?: string;
+  short?: MsgKey;
+  desc?: MsgKey;
   icon: LucideIcon;
-  /** kısa açıklama (menü ve araçlar sayfasında) */
-  desc?: string;
   end?: boolean;
 }
 
 export interface NavGroup {
-  title?: string;
+  title?: MsgKey;
   items: NavItem[];
 }
 
-export const NAV: NavGroup[] = [
-  { items: [{ to: '/', label: 'Dersler', icon: GraduationCap, end: true, desc: 'Adım adım resimli şiş ve tığ dersleri' }] },
+export const LEARN_NAV: NavGroup[] = [
+  { items: [{ to: '/', label: 'navLessons', desc: 'descLessons', icon: GraduationCap, end: true }] },
   {
-    title: 'Kütüphane',
+    title: 'groupLibrary',
     items: [
-      { to: '/desenler', label: 'Desen kütüphanesi', short: 'Desenler', icon: SquareStack, desc: 'Haraşo, lastik, selanik, burgu ve tığ desenleri' },
-      { to: '/sozluk', label: 'Sözlük', icon: BookA, desc: 'Türkçe ve İngilizce terimler, kısaltmalar' },
-    ],
-  },
-  {
-    title: 'Atölye araçları',
-    items: [
-      { to: '/kareli', label: 'Kareli kağıt', icon: Grid3x3, desc: 'Desen grafiği çiz, örerken sıra sıra takip et' },
-      { to: '/tarif', label: 'Tarif hazırlayıcı', icon: NotebookPen, desc: 'Şişini, ipini ve ölçünü gir, adım adım tarif al' },
-      { to: '/sayaclar', label: 'Sayaçlar', icon: Tally5, desc: 'Sıra, ilmek ve tekrar sayaçları' },
-      { to: '/hesap', label: 'Hesaplayıcılar', icon: Calculator, desc: 'Kaç ilmek, eşit artırma, ip miktarı' },
-      { to: '/renk', label: 'Renk stüdyosu', icon: Palette, desc: 'Palet, şerit ve sıcaklık battaniyesi' },
-    ],
-  },
-  {
-    title: 'Benim',
-    items: [
-      { to: '/projeler', label: 'Projelerim', short: 'Projeler', icon: FolderHeart, desc: 'Örgü defterin' },
-      { to: '/sepet', label: 'İp sepeti', icon: ShoppingBasket, desc: 'İplerin, şişlerin ve tığların' },
+      { to: '/desenler', label: 'navPatterns', short: 'navPatternsShort', desc: 'descPatterns', icon: SquareStack },
+      { to: '/sozluk', label: 'navGlossary', desc: 'descGlossary', icon: BookA },
     ],
   },
 ];
 
-export const SETTINGS_ITEM: NavItem = { to: '/ayarlar', label: 'Ayarlar', icon: Settings, desc: 'Trabzan adları, tema, solak modu, yedek' };
-export const TOOLS_ITEM: NavItem = { to: '/araclar', label: 'Araçlar', icon: Wrench, desc: 'Kareli kağıt, sayaçlar, hesaplayıcılar' };
+export const CREATE_NAV: NavGroup[] = [
+  {
+    items: [
+      { to: '/yarat', label: 'navWorks', desc: 'descWorks', icon: Scissors, end: true },
+      { to: '/projeler', label: 'navProjects', short: 'navProjectsShort', desc: 'descProjects', icon: FolderHeart },
+    ],
+  },
+  {
+    title: 'groupTools',
+    items: [
+      { to: '/kareli', label: 'navChart', short: 'navChartShort', desc: 'descChart', icon: Grid3x3 },
+      { to: '/tarif', label: 'navRecipe', desc: 'descRecipe', icon: NotebookPen },
+      { to: '/sayaclar', label: 'navCounters', desc: 'descCounters', icon: Tally5 },
+      { to: '/hesap', label: 'navCalculators', desc: 'descCalculators', icon: Calculator },
+      { to: '/renk', label: 'navColors', desc: 'descColors', icon: Palette },
+      { to: '/sepet', label: 'navStash', desc: 'descStash', icon: ShoppingBasket },
+    ],
+  },
+];
 
-/** Telefonda alt menü */
-export const BOTTOM_NAV: string[] = ['/', '/desenler', '/araclar', '/projeler'];
+export const TOOLS_ITEM: NavItem = { to: '/araclar', label: 'navTools', icon: Wrench };
+export const LAYERS_ICON = Layers;
 
-export const ALL_ITEMS: NavItem[] = [...NAV.flatMap((g) => g.items), TOOLS_ITEM, SETTINGS_ITEM];
+/** Telefonda alt menü (dünyaya göre) */
+export const BOTTOM_NAV: Record<World, string[]> = {
+  learn: ['/', '/desenler', '/sozluk'],
+  create: ['/yarat', '/projeler', '/kareli', '/araclar'],
+};
+
+const LEARN_PREFIXES = ['/ders', '/desenler', '/sozluk', '/pro'];
+const NEUTRAL = ['/ayarlar'];
+
+/** Rota hangi dünyaya ait? Nötr sayfalarda null. */
+export function worldOf(pathname: string): World | null {
+  if (NEUTRAL.some((p) => pathname.startsWith(p))) return null;
+  if (pathname === '/' || LEARN_PREFIXES.some((p) => pathname.startsWith(p))) return 'learn';
+  return 'create';
+}
+
+export const ALL_ITEMS: NavItem[] = [...LEARN_NAV, ...CREATE_NAV].flatMap((g) => g.items).concat(TOOLS_ITEM);
