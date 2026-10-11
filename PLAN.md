@@ -1,53 +1,25 @@
 # İlmek İlmek · Ana Plan
 
-> **Güncelleme (yön değişikliği):** Uygulama artık **önce bir eğitim uygulaması**. Kalbi, ihtiyaç listesinden ve ilmek atmadan
-> başlayan, **işaret dili kartları gibi resimli ve hareketli adımlarla** ilerleyen şiş ve tığ dersleri. Her adımda el, şiş/tığ
-> ve ipin **nereden girip nereden çıktığı** oklarla ve kısa animasyonla gösterilir. Kareli kağıt, sayaçlar, hesaplayıcılar ve
-> diğerleri "Atölye araçları" olarak dersleri destekler.
->
-> - **Yol haritası:** Hazırlık (ücretsiz) → Şiş yolu 5 seviye, Tığ yolu 5 seviye. İlk iki seviye ücretsiz.
-> - **Gelir modeli:** ücretsiz katman (isteğe bağlı, ders akışını bölmeyen reklam) + ucuz, tek seferlik **Usta paketi** (ileri seviyeler
->   ve araçların gelişmiş özellikleri). Önce web/PWA, ardından aynı kodla Capacitor ile Android/iOS.
-> - **Üslup:** yapay zeka gibi duran her şey kaldırıldı: sihirbaz/parıltı simgeleri, asistan dili, emojiler. Ses bir örgü kitabı gibi
->   sade ve öğretici. Ayrıntılar: [docs/MIMARI.md](docs/MIMARI.md).
-> - "Model sihirbazı" → **Tarif hazırlayıcı**, "Profesörün notu" → **Usta ipucu**.
+> Şiş, misinalı şiş ve tığ için **öğrenme + üretme** uygulaması. İki ayrı dünya:
+> **Öğren** (resimli, adım adım dersler, desen kütüphanesi, sözlük) ve **Yarat** (eserler, tarif hazırlayıcı,
+> kareli kağıt, sayaçlar, hesaplayıcılar, renk stüdyosu, ip sepeti, projeler). İkisi arasında tek dokunuşla geçilir;
+> Yarat'ta bilinmeyen her teknik, ilgili dersin resimli adımlarını açar.
 
-> Şiş, misinalı şiş ve tığ için **öğrenme + planlama + örerken takip** uygulaması.
-> Hedef: Kareli kağıt, kurşun kalem, fosforlu bant, mekanik sıra sayacı, ip sepeti defteri ve
-> örgü hocasının sabrını **tek bir dijital atölye masasında** birleştirmek.
-
----
-
-## 1. Vizyon
-
-Bir örgücünün masasında ne varsa uygulamada da olacak — ama "akıllı" hâlleriyle:
-
-| Masadaki analog araç | Uygulamadaki karşılığı |
-|---|---|
-| Kareli kağıt + renkli kalemler | **Kareli Kağıt** desen editörü (kare *veya* örgü oranlı kareler) |
-| Örgücü kareli kağıdı (4:5, 2:3 oranlı) | Ölçü örneğinden hesaplanan **oranlı hücreler** — çizdiğin desen örünce basık çıkmaz |
-| Mıknatıslı grafik tahtası + cetvel | **Takip modu**: o anki sırayı gösteren sürüklenebilir "mıknatıs cetvel" |
-| Fosforlu / çıkarılabilir bant | Bitirilen sıraların üstüne sarı "bant" çekilir |
-| Kacha-kacha sıra sayacı, çentik, boncuk dizisi | 4 farklı stilde **sayaç** (mekanik rakam, çentik, boncuk/abaküs, yumak) + bağlı sayaçlar + hatırlatıcılar |
-| Örgü defteri / bullet journal | **Projelerim**: günlük, fotoğraf, ölçü örneği kaydı, süre, ilerleme |
-| İp etiketleri, yumak sargı kartları | **İp Sepeti**: ip kartları, lot no, metre/gram, "bu iple ne örerim?" |
-| Şiş/tığ ölçer (delikli kart) | Şiş/tığ dönüştürücü (mm ↔ US ↔ UK) + **alet çantası** |
-| Cetvele ip sarma (WPI) | **İp kalınlığı bulucu**: 2,5 cm'ye kaç tur sardın → ip kategorisi + önerilen şiş/tığ |
-| Renkli kalemle sıcaklık battaniyesi tablosu | **Renk Stüdyosu**: sıcaklık battaniyesi, şerit üretici, büyükanne karesi dizici |
-| Örgü hocası | **Akademi** (adım adım animasyonlu dersler) + **Model Sihirbazı** (kişiye özel tarif) |
-
-### Tasarım dili: "Atölye masası"
-- Krem kağıt zemin, kraft kağıt kartlar, **washi bant** etiketler, **dikiş (teyel) çizgisi** kenarlıklar.
-- Başlıklar *Fraunces*, gövde *Nunito*, el yazısı notlar *Caveat* (hepsi uygulamaya gömülü → çevrimdışı çalışır).
-- İp renkleri paleti: kiremit, hardal, adaçayı, erik, denim, gül kurusu.
-- Gece modu ("gece örgüsü"), **solak modu** (animasyonlar aynalanır), büyük dokunma alanları — elinde şiş varken tek parmakla kullanılabilir.
+- **Dersler:** Hazırlık (5 ders) + Şiş yolu (5 seviye, 25 ders) + Tığ yolu (5 seviye, 26 ders) = **56 ders**. Hazırlık ve her yolun ilk iki seviyesi ücretsiz.
+  Her adımda el, şiş/tığ ve ipin **nereden girip nereden çıktığı** numaralı oklar, renkli çalışan ip ve kısa döngülü animasyonla gösterilir.
+- **Diller:** Türkçe, English, Español, Português. Dil değişince her şey değişir: arayüz, dersler, tarifler, semboller, birimler.
+  Tığ terimleri Türkçede iki adlandırma sistemiyle (ip atma sayısına göre / İngilizceyle eşleşen), İngilizcede US ve UK olarak ayarlanır.
+- **Gelir modeli:** ücretsiz katman + ucuz, tek seferlik **Usta paketi** (3–5. seviyeler). Reklam altyapısı hazır ama kapalı.
+  Önce web/PWA, ardından aynı kodla Capacitor ile Android/iOS: [docs/MOBIL.md](docs/MOBIL.md).
+- **Üslup:** yapay zekâ gibi duran her şey kaldırıldı: sihirbaz/parıltı simgeleri, asistan dili, emojiler, uzun tireler.
+  Ses bir örgü kitabı gibi sade ve öğretici. Ayrıntılar: [docs/MIMARI.md](docs/MIMARI.md).
 
 ---
 
 ## 2. Bilgi Bankası (örgü profesörünün kafası)
 
 ### 2.1 Şiş temelleri
-- **Düz (knit, k)** ve **ters (purl, p)** — tüm şiş örgüsü bu iki ilmekten doğar.
+- **Düz (knit, k)** ve **ters (purl, p)**: tüm şiş örgüsü bu iki ilmekten doğar.
 - **Haraşo** (garter): her sıra düz. Yuvarlak örgüde: 1 tur düz, 1 tur ters. Kıvrılmaz, iki yüzü aynı.
 - **Jarse** (stockinette): düz sırada düz, ters sırada ters. Yuvarlakta her tur düz. **Kenarları kıvrılır** → kenara haraşo/pirinç önerilir.
 - **Lastik** (rib): 1×1 (düz örgüde 2'nin katı+1 simetrik), 2×2 (4'ün katı+2), yuvarlakta 2'nin / 4'ün katı. Esner, kenara yakışır, en dar ölçüyü verir.
@@ -68,7 +40,7 @@ Bir örgücünün masasında ne varsa uygulamada da olacak — ama "akıllı" h�
 | Üçlü trabzan | 2 | 3 | 4 | tr | dtr |
 | Dörtlü trabzan | 3 | 4 | 5 | dtr | trtr |
 
-> ⚠️ **Profesör notu:** Türkçe kaynaklarda trabzanlar iki farklı sistemle adlandırılır.
+> **Usta ipucu:** Türkçe kaynaklarda trabzanlar iki farklı sistemle adlandırılır.
 > (A) İngilizceyle eşleşen: *yarım trabzan = hdc, ikili trabzan = dc, üçlü trabzan = tr*.
 > (B) İp atma sayısına göre: *trabzan = 1 ip atma (dc), ikili = 2 ip atma (tr), üçlü = 3 ip atma (dtr)*.
 > Uygulama **ayarlardan** bu sistemi seçtirir ve her yerde ip atma sayısını + US kısaltmasını da gösterir, böylece hiçbir tarif yanlış anlaşılmaz.
@@ -87,25 +59,25 @@ Diğerleri: sihirli halka, artırma (aynı ilmeğe 2), görünmez eksiltme (amig
 | 6 | Super Bulky | Çok kalın | 5–6 | 8–12,75 | 9–15 | 7–11 |
 | 7 | Jumbo | Dev / kol örgüsü | 1–4 | 12,75+ | 15+ | ≤6 |
 
-Lif bilgisi: yün, merino, alpaka, moher, kaşmir, pamuk, keten, bambu, ipek, akrilik, polyester kadife (şönil), penye ip — sıcaklık, esneme, yıkama, hangi projeye uygun.
+Lif bilgisi: yün, merino, alpaka, moher, kaşmir, pamuk, keten, bambu, ipek, akrilik, polyester kadife (şönil), penye ip: sıcaklık, esneme, yıkama, hangi projeye uygun.
 
 ---
 
 ## 3. Modüller
 
-### 3.1 🏠 Atölye (ana sayfa)
-Devam eden projeler ("kaldığın yerden devam et"), hızlı sayaç, günün ilmeği, profesörün notu, bu haftanın istatistiği.
+### 3.1 Öğren ana sayfası
+Ders yolları (Hazırlık, Şiş, Tığ), kaldığın yerden devam, günlük seri, seviyelere göre ders listesi, Usta paketi kilitleri.
 
-### 3.2 🎓 Akademi
+### 3.2 Dersler, desen kütüphanesi, sözlük
 - **Şiş dersleri** ve **tığ dersleri**: her derste animasyonlu gösterim (oynat/duraklat/adım adım/hız), yazılı adımlar, ipuçları, sık yapılan hatalar, kısaltmalar (TR / US / UK), grafik sembolü, nerede kullanılır.
-- **Animasyon motorları** (GIF gibi döngüsel, ama adım adım kontrol edilebilir SVG):
+- **Çizim motoru** (`src/engine/illust`, GIF gibi döngüsel ama adım adım kontrol edilebilir SVG):
   - *Tığ motoru*: tığdaki ilmek sayısını takip eder; "ip at → batır → çek → 2 ilmekten geçir" ilkelleriyle **her** tığ ilmeğini doğru sırayla canlandırır.
   - *Şiş motoru*: sol/sağ şiş, ilmeklerin geçişi; düz batırma, ters batırma, ip sarma, çekme, düşürme, kaydırma, ip atma.
-- **Desen kütüphanesi**: haraşo, jarse, lastik, pirinç, çift pirinç, sepet, yalancı selanik, selanik, burgu, ajur, dalga… — her biri için *ilmek kuralı* ("4'ün katı + 1"), düz ve yuvarlak tarif, **örülmüş kumaş önizlemesi**.
+- **Desen kütüphanesi**: haraşo, jarse, lastik, pirinç, çift pirinç, sepet, yalancı selanik, selanik, burgu, ajur, dalga…: her biri için *ilmek kuralı* ("4'ün katı + 1"), düz ve yuvarlak tarif, **örülmüş kumaş önizlemesi**.
 - **Sözlük**: TR ↔ EN (US/UK) terimler, kısaltmalar, trabzan adlandırma rehberi.
 
-### 3.3 📐 Kareli Kağıt (desen planlayıcı)
-- Canvas tabanlı hızlı ızgara (200×200'e kadar), yakınlaştır/kaydır, 10'arlı kalın çizgiler — gerçek kareli kağıt gibi.
+### 3.3 Kareli kağıt (desen planlayıcı)
+- Canvas tabanlı hızlı ızgara (200×200'e kadar), yakınlaştır/kaydır, 10'arlı kalın çizgiler: gerçek kareli kağıt gibi.
 - **Oranlı hücre**: ölçü örneğinden (10 cm'de X ilmek × Y sıra) hücre en/boy oranı.
 - Araçlar: kalem, silgi, kova, çizgi, dikdörtgen, damlalık, seçim (kopyala/yapıştır/çevir), **simetri** (dikey/yatay/4'lü), yazı damgası, **fotoğraftan desen** (renk sayısı azaltmalı pikselleştirme).
 - Renk paleti (ip sepetinden), sembol paleti (şiş / tığ), tekrar kutusu, motif döşeme önizlemesi.
@@ -115,20 +87,20 @@ Devam eden projeler ("kaldığın yerden devam et"), hızlı sayaç, günün ilm
 - **Takip modu**: mıknatıs cetvel, fosforlu bant, büyük +1 düğmeleri, okuma yönü oku, ekranın kapanmasını engelleme (Wake Lock).
 - Dışa aktar: PNG, yazdır, JSON.
 
-### 3.4 🔢 Sayaçlar
+### 3.4 Sayaçlar
 Sıra / ilmek / tekrar sayaçları; **bağlı sayaç** ("her 8 sırada tekrar sayacı +1"), **hatırlatıcı** ("12. sırada eksilt!"), hedef halkası, titreşim + tık sesi, klavye kısayolu (boşluk = +1), geçmiş ve hız istatistiği. Stiller: mekanik rakam, çentik, boncuk, yumak.
 
-### 3.5 🧮 Hesaplayıcılar
-1. **Kaç ilmek atmalıyım?** — ölçü örneği + istenen genişlik + desen katı (ör. 4'ün katı+2) → en yakın iki seçenek ve gerçek genişlikleri.
-2. **Eşit artırma/eksiltme** — düz ve yuvarlak örgü için "*7 ör, 1 artır*" dağılımı.
-3. **İp miktarı** — proje türü/ölçü/ip kalınlığına göre ya da **örnek tartma** yöntemiyle; yumak sayısı.
-4. **Şiş / tığ dönüştürücü** — mm ↔ US ↔ UK.
+### 3.5 Hesaplayıcılar
+1. **Kaç ilmek atmalıyım?**: ölçü örneği + istenen genişlik + desen katı (ör. 4'ün katı+2) → en yakın iki seçenek ve gerçek genişlikleri.
+2. **Eşit artırma/eksiltme**: düz ve yuvarlak örgü için "*7 ör, 1 artır*" dağılımı.
+3. **İp miktarı**: proje türü/ölçü/ip kalınlığına göre ya da **örnek tartma** yöntemiyle; yumak sayısı.
+4. **Şiş / tığ dönüştürücü**: mm ↔ US ↔ UK.
 5. **İp kalınlığı bulucu (WPI)**.
-6. **Beden tabloları** — bere, çorap, kazak, bebek/çocuk/yetişkin.
-7. **Tığ daire hesabı** — çap → tur sayısı.
-8. **İp değiştirme** — desendeki ipin yerine benimkiyle kaç yumak?
+6. **Beden tabloları**: bere, çorap, kazak, bebek/çocuk/yetişkin.
+7. **Tığ daire hesabı**: çap → tur sayısı.
+8. **İp değiştirme**: desendeki ipin yerine benimkiyle kaç yumak?
 
-### 3.6 🪄 Model Sihirbazı ("ben ipimi söyleyeyim, sen tarif ver")
+### 3.6 Tarif hazırlayıcı ve Eserler ("ben ipimi söyleyeyim, sen tarif ver")
 1. Alet seç (tığ / şiş / misinalı şiş, numarası) → 2. İp seç (sepetten veya tanımla; birden fazla renk) → 3. Proje seç → 4. Ölçüler ve desen → 5. Ölçü örneği (standart veya kendi örneğin).
 
 **Çıktı:** malzeme listesi, gerekli metre/yumak, ölçü örneği, kısaltmalar, **işaretlenebilir adım adım tarif** (her adımın sonunda ilmek sayısı), adımlardan derslere bağlantı, gerekiyorsa yuvarlak grafik / şema, tek tıkla proje olarak kaydet.
@@ -143,20 +115,22 @@ Sıra / ilmek / tekrar sayaçları; **bağlı sayaç** ("her 8 sırada tekrar sa
 
 Her üretilen tarif kendi ilmek sayılarını **matematiksel olarak doğrular** (testlerle).
 
-### 3.7 📒 Projelerim
+**Eserler** (`/yarat`): haraşo atkı, 2×2 lastik bere, yalancı selanik atkı, burgulu bere, pirinç bulaşık bezi, ajur bebek battaniyesi, pirinç boyunluk, bebek patiği; çizgili amigurumi top, büyükanne karesi ve battaniyesi, bardak altlığı seti, tığ bere, çizgili atkı, file pazar çantası, kulaklık bandı.
+
+### 3.7 Projelerim
 Durum panosu (Fikir · Sırada · Örülüyor · Uykuda · Bitti), proje sayfası: tarif adımları, grafikler, sayaçlar, ip/alet, ölçü örneği, günlük, fotoğraflar, örgü süresi kronometresi, ilerleme.
 
-### 3.8 🧺 İp Sepeti & Alet Çantası
-İp kartları (marka, renk, lif, kalınlık, metre/gram, yumak, lot no), toplam metraj, **"bu iple ne örebilirim?"** → sihirbaza hazır doldurulmuş geçiş. Şiş/tığ envanteri.
+### 3.8 İp sepeti ve alet çantası
+İp kartları (marka, renk, lif, kalınlık, metre/gram, yumak, lot no), toplam metraj, **"bu iple ne örebilirim?"** → tarif hazırlayıcıya hazır doldurulmuş geçiş. Şiş/tığ envanteri.
 
-### 3.9 🎨 Renk Stüdyosu
+### 3.9 Renk stüdyosu
 - Palet uyumu (tamamlayıcı, komşu, üçlü) + **gri tonlama kontrast testi** (renkli örgüde değer kontrastı).
 - **Şerit üretici** (rastgele / Fibonacci / geçişli) + örülmüş önizleme.
 - **Sıcaklık battaniyesi** planlayıcı (aralık → renk, günlük giriş, şehir seçip geçmiş sıcaklıkları otomatik doldurma).
 - **Büyükanne karesi battaniye dizici** (yan yana aynı renk gelmesin).
 
-### 3.10 ⚙️ Ayarlar
-Trabzan adlandırma sistemi, birim (cm/inç), tema, solak modu, sayaç sesi/titreşim, yedekle/geri yükle (JSON).
+### 3.10 Ayarlar
+Dil, tığ adlandırma sistemi (Türkçe iki sistem, İngilizce US/UK), birim (cm/inç), tema, solak modu (çizimler aynalanır), animasyon hızı, sayaç sesi/titreşim, ekranı açık tutma, yedekle/geri yükle (JSON).
 
 ---
 
@@ -166,23 +140,24 @@ Trabzan adlandırma sistemi, birim (cm/inç), tema, solak modu, sayaç sesi/titr
 - **PWA**: çevrimdışı çalışır, telefona "uygulama" olarak kurulur.
 - Saf CSS tasarım sistemi (CSS değişkenleri, açık/koyu tema).
 - Motorlar `src/engine/` altında **saf fonksiyonlar** → Vitest ile test edilir:
-  `math` (ölçü, katlar, dağıtım, ip), `chart` (model, tarif üretimi, C2C, kumaş simülasyonu), `patterns` (sihirbaz üreticileri), `anim` (tığ/şiş animasyon senaryoları), `image` (pikselleştirme).
+  `math` (ölçü, katlar, dağıtım, ip), `chart` (model, yazılı tarif, C2C, kumaş simülasyonu), `patterns` (tarif üreteçleri), `illust` (şiş/tığ/el çizimleri ve şemalar), `image` (pikselleştirme).
 - Bilgi `src/knowledge/` altında veri olarak: ip kalınlıkları, şiş/tığ ölçüleri, lifler, tığ ilmekleri, şiş teknikleri, desen kütüphanesi, sözlük, semboller.
 - GitHub Actions → GitHub Pages yayını.
 
 ## 5. Yol haritası
-| Aşama | İçerik |
-|---|---|
-| M0 | Araştırma + bu plan ✅ |
-| M1 | İskelet, tasarım sistemi, gezinme, veri deposu, ortak bileşenler |
-| M2 | Bilgi bankası verileri + semboller + matematik motoru (+ testler) |
-| M3 | Akademi + tığ/şiş animasyon motorları + desen kütüphanesi + sözlük |
-| M4 | Kareli Kağıt editörü + takip modu + tarif üretimi + kumaş önizleme + fotoğraftan desen |
-| M5 | Sayaçlar, Projelerim, İp Sepeti, Atölye ana sayfa |
-| M6 | Hesaplayıcılar |
-| M7 | Model Sihirbazı (tüm üreticiler + yuvarlak grafik) |
-| M8 | Renk Stüdyosu |
-| M9 | PWA, cila, testler, yayın |
+| Aşama | İçerik | Durum |
+|---|---|---|
+| M0 | Araştırma + plan | tamam |
+| M1 | İskelet, tasarım sistemi, gezinme, veri deposu, ortak bileşenler | tamam |
+| M2 | Bilgi bankası + semboller + matematik motoru (+ testler) | tamam |
+| M3 | Çizim motoru, ders oynatıcısı, 56 ders, desen kütüphanesi, sözlük | tamam |
+| M4 | Kareli kağıt düzenleyici, takip sayfası, yazılı tarif, kumaş önizleme, fotoğraftan grafik | tamam |
+| M5 | Sayaçlar, Projelerim, İp sepeti | tamam |
+| M6 | Hesaplayıcılar | tamam |
+| M7 | Tarif hazırlayıcı + Eserler | tamam |
+| M8 | Renk stüdyosu | tamam |
+| M9 | Dört dil, iki dünya, PWA, entegrasyon, yayın iş akışı | tamam |
+| M10 | Mobil uygulama (Capacitor), mağaza içi satın alma | sırada |
 
 ## 6. Kalite ölçütleri
 - Her tarifteki ilmek sayıları testlerle doğrulanır (ör. büyükanne karesinde her turda 4 köşe; amigurumide 6'nın katları).

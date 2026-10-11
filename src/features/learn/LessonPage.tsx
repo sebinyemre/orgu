@@ -192,7 +192,8 @@ export default function LessonPage() {
           </Link>
         </div>
       ) : phase === 'intro' ? (
-        <div className="lesson-body lesson-intro">
+        <div className="lesson-body lesson-intro-wrap">
+        <div className="lesson-intro">
           <div className="eyebrow">{level ? t.level(level.n) : ''}</div>
           <h1>{title}</h1>
           <p className="lesson-lede">{terms.fill(lesson.intro[lang])}</p>
@@ -217,6 +218,15 @@ export default function LessonPage() {
               {t.start} <ArrowRight />
             </button>
           </div>
+        </div>
+          {steps.length > 0 && (
+            // dersin sonunda varılacak yer: son adımın çizimi
+            <figure className="lesson-intro-preview" aria-hidden>
+              <Scene dur={steps[steps.length - 1].dur ?? 3.4} viewBox={steps[steps.length - 1].viewBox}>
+                {steps[steps.length - 1].scene()}
+              </Scene>
+            </figure>
+          )}
         </div>
       ) : phase === 'step' ? (
         <StepView

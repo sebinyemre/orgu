@@ -78,6 +78,29 @@
 }
 
 /* giriş */
+.lesson-intro-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+.lesson-intro-preview {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--il-bg);
+  overflow: hidden;
+  max-width: 520px;
+}
+@media (min-width: 960px) {
+  .lesson-intro-wrap {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    max-width: 1180px;
+  }
+  .lesson-intro-preview {
+    margin-top: var(--space-6);
+  }
+}
 .lesson-intro {
   max-width: 680px;
   display: flex;

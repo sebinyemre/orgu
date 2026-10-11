@@ -46,12 +46,12 @@ Bu kurallar kesindir:
 | `src/styles`, `src/ui`, `src/store`, `src/layout`, `src/lib`, `src/types.ts`, `src/routes.tsx` | Ortak (salt okunur) |
 | `src/knowledge/*` (mevcut dosyalar), `src/engine/math`, `src/engine/counters.ts`, `src/engine/chart/draw.ts` | Ortak (salt okunur) |
 | `src/i18n` | Ortak (salt okunur) |
-| `src/features/learn`, `src/features/library`, `src/features/tools`, `src/lessons`, `src/engine/illust` | Dersler |
+| `src/features/learn`, `src/features/tools`, `src/lessons`, `src/engine/illust` | Dersler ve çizim motoru |
 | `src/features/works`, `src/content/works` | Eserler galerisi |
 | `src/features/chart`, `src/engine/chart/*` (draw.ts hariç), `src/engine/image` | Kareli kağıt |
 | `src/features/projects`, `src/features/counters`, `src/features/stash` | Projeler, sayaçlar, ip sepeti |
 | `src/features/recipe`, `src/engine/patterns` | Tarif hazırlayıcı |
-| `src/features/calculators`, `src/features/colors` | Hesaplayıcılar, renk stüdyosu |
+| `src/features/calculators`, `src/features/colors`, `src/features/library` | Hesaplayıcılar, renk stüdyosu, desen kütüphanesi ve sözlük |
 
 Ortak dosyada değişiklik gerekiyorsa kendi klasöründe yardımcı yaz, ya da değişikliği raporunda öner.
 
@@ -95,3 +95,27 @@ Ortak dosyada değişiklik gerekiyorsa kendi klasöründe yardımcı yaz, ya da 
   `node <scratchpad>/shot.cjs <klasör> <genişlik> <yükseklik> <url>` betiği kullanılabilir (390×844 telefon, 1280×800 masaüstü).
   İlk açılış penceresini atlamak için ortam değişkeni:
   `SETUP_JS="localStorage.setItem('ilmek.ayarlar', JSON.stringify({state:{onboarded:true,trabzan:'ipatma',units:'cm',theme:'auto',leftHanded:false,counterSound:true,counterVibrate:true,keepAwake:true,showEnglish:true,animSpeed:1},version:1}))"`
+
+## 6. Çizim motoru ve dersler
+Dersler `src/lessons/content/<dersId>.tsx` dosyalarıdır; her biri bir `Lesson` döndürür (giriş, ihtiyaçlar, adımlar, alıştırma,
+kısa sınav, özet). Kayıt defteri `src/lessons/index.ts` dosyaları kendiliğinden bulur; müfredat `src/knowledge/curriculum.ts`.
+Her adımın `scene()` işlevi `src/engine/illust` sahnelerinden birini döndürür:
+
+| Dosya | Sahneler |
+|---|---|
+| `knit.tsx` | `KnitScene`: iki şiş, ilmekler, sağ şiş pozları (düz, ters, 2 birlikte, arka bacak), ip sarma, düşürme, ip atma |
+| `crochet.tsx` | `CrochetScene`: tığ pozları, tığdaki ilmekler, ip atma, n ilmekten geçirme, sıra ve zincir zemini |
+| `crochet2.tsx` | kabartma ilmek, Tunus işi, motif birleştirme, amigurumi top |
+| `closeup.tsx` | ilmek tepesine yakın plan: ön/arka halka, iki ön halkadan eksiltme |
+| `scenes.tsx` | kaygan düğüm, şiş ve tığ tutuşu, uzun kuyruklu ilmek atma (el), sihirli halka, yumak |
+| `swatch.tsx` | örgü yüzeyi (düz, ters, delik, yatık eksiltmeler, kaydırılmış, renkli), kapatma, kaçan ilmek, uç gizleme |
+| `round.tsx` | misinalı şiş halkası ve burulma, magic loop, çorap şişleri, bere |
+| `texture.tsx` | burgu ve yardımcı şiş, renkli örgünün iki yüzü, ölçü örneği cetveli |
+| `diagram.tsx` | sembol şemaları: tığ dairesi, spiral, büyükanne karesi, sıra şemaları, şiş grafiği okuma; `fitView` |
+| `info.tsx`, `tools.tsx` | malzeme panosu, ip etiketi, şiş ölçer, ip kalınlıkları, malzeme simgeleri |
+
+Kurallar: arkada kalan parça önce, önde kalan sonra çizilir (ipin nereden geçtiği bu sırayla görünür). Çalışan ip ve yeni ilmek
+kontrast renktedir (`YARN.second`). Çizimde yazı yoktur; açıklama ders metnindedir. Sol el ayarı sahneyi aynalar.
+
+Geliştirmede `/#/lab?still&ders=<dersId>` bir dersin tüm adımlarını durağan kareler olarak, `/#/lab?set=round|tex|cro`
+sahne kataloğunu gösterir (yalnızca geliştirme sunucusunda).

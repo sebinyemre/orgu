@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "İlmek İlmek — şiş, misinalı şiş ve tığ için örgü atölyesi: öğren, planla, takip et.",
+  "description": "İlmek İlmek: şiş, misinalı şiş ve tığ için örgü atölyesi. Öğren, planla, ör.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
