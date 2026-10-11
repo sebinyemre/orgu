@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Minus, Plus } from 'lucide-react';
-import { useMsgs } from '@/i18n';
+import { getLang, useMsgs } from '@/i18n';
 import { COMMON } from '@/i18n/common';
 
 interface FieldProps {
@@ -32,7 +32,8 @@ export function parseNum(s: string): number {
 
 function show(n: number | undefined): string {
   if (n === undefined || !Number.isFinite(n)) return '';
-  return String(Math.round(n * 1000) / 1000).replace('.', ',');
+  const s = String(Math.round(n * 1000) / 1000);
+  return getLang() === 'en' ? s : s.replace('.', ',');
 }
 
 interface NumberInputProps {

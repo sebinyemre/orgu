@@ -1,0 +1,447 @@
+/* Desen kütüphanesi ve sözlük (.lib-) */
+
+/* ── Süzgeçler ── */
+.lib-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.lib-search {
+  position: relative;
+}
+.lib-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+.lib-search .input {
+  padding-left: 38px;
+}
+.lib-filter-row {
+  gap: var(--space-3);
+}
+.lib-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.lib-chips .chip {
+  min-height: 34px;
+  padding: 4px 13px;
+  font-size: var(--fs-sm);
+}
+.lib-count {
+  margin-bottom: var(--space-3);
+  min-height: 32px;
+}
+
+/* ── Kartlar ── */
+.lib-card {
+  display: flex;
+  flex-direction: column;
+}
+.lib-thumb {
+  height: 116px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+}
+.lib-thumb canvas {
+  max-width: none !important;
+  flex: none;
+}
+.lib-thumb-empty {
+  background: repeating-linear-gradient(-45deg, var(--paper-2) 0 6px, var(--paper-3) 6px 12px);
+}
+.lib-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.lib-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.lib-card .card-title {
+  margin: 0;
+}
+.lib-level {
+  display: inline-flex;
+  gap: 3px;
+  margin-top: 6px;
+  flex: none;
+}
+.lib-level span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--plum);
+}
+.lib-level span.on {
+  background: var(--plum);
+}
+.lib-badges {
+  gap: 4px;
+}
+
+/* ── Desen sayfası ── */
+.lib-back {
+  margin: 0 0 var(--space-2) calc(-1 * var(--space-2));
+}
+.lib-meta {
+  margin: calc(-1 * var(--space-3)) 0 var(--space-4);
+  gap: 6px var(--space-2);
+}
+.lib-top-grid,
+.lib-chart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  margin-bottom: var(--space-4);
+}
+@media (min-width: 900px) {
+  .lib-top-grid {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+  .lib-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.lib-top-grid > *,
+.lib-chart-grid > * {
+  min-width: 0;
+}
+.lib-pattern .card-title {
+  margin: 0;
+}
+.lib-rule-big {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+}
+.lib-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.lib-rows li {
+  display: grid;
+  grid-template-columns: minmax(96px, max-content) minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--paper-2);
+}
+.lib-row-label {
+  font-weight: 800;
+  color: var(--accent);
+  font-size: var(--fs-sm);
+}
+.lib-row-text {
+  line-height: 1.5;
+}
+@media (max-width: 520px) {
+  .lib-rows li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+.lib-repeat {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+.lib-calc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+.lib-calc-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+}
+.lib-calc-n {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+}
+.lib-calc-more {
+  align-self: flex-start;
+}
+.lib-chart-wrap,
+.lib-fabric-wrap {
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--paper-2);
+}
+.lib-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.lib-legend li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.lib-legend svg {
+  flex: none;
+}
+.lib-legend-how {
+  display: block;
+}
+.lib-lessons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+.lib-tips {
+  margin: 0;
+  padding-left: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.lib-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1.5px dashed var(--line-2);
+}
+.lib-pager .btn {
+  white-space: normal;
+  text-align: left;
+  min-height: 52px;
+}
+.lib-pager-next {
+  text-align: right !important;
+  margin-left: auto;
+}
+.lib-pager-label {
+  display: block;
+  font-weight: 700;
+}
+
+/* ── Sözlük ── */
+.lib-gtools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.lib-jump .chip {
+  cursor: pointer;
+}
+.lib-gsection {
+  scroll-margin-top: 72px;
+}
+.lib-section-lede {
+  max-width: 72ch;
+}
+.lib-subtitle {
+  font-size: var(--fs-lg);
+  margin: var(--space-4) 0 var(--space-2);
+}
+.lib-gtable th.lib-me,
+.lib-gtable td.lib-me,
+.lib-trap-table .lib-me {
+  background: color-mix(in srgb, var(--accent) 9%, var(--card));
+}
+.lib-gtable th.lib-me {
+  color: var(--accent);
+}
+.lib-gtable td.lib-me .lib-term {
+  font-weight: 800;
+}
+.lib-cell {
+  display: inline;
+}
+.lib-cell .lib-alt + .lib-alt {
+  margin-top: 4px;
+}
+.lib-term {
+  font-weight: 600;
+}
+.lib-abbr {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--denim);
+  background: var(--denim-soft);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.lib-alt {
+  display: block;
+}
+.lib-alt-label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+}
+.lib-gtable td.lib-me {
+  position: relative;
+  padding-right: 36px;
+}
+.lib-lesson {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+.lib-gsection > .section-title {
+  margin-top: var(--space-6);
+}
+.lib-symtable td {
+  vertical-align: middle;
+}
+.lib-trap {
+  margin-bottom: var(--space-4);
+  padding: var(--space-5);
+  background: color-mix(in srgb, var(--plum) 6%, var(--card));
+}
+.lib-trap-title {
+  font-size: var(--fs-xl);
+  margin: 0;
+}
+.lib-trap-text {
+  max-width: 78ch;
+}
+.lib-trap-text p {
+  margin-bottom: var(--space-2);
+}
+.lib-trap-table td,
+.lib-trap-table th {
+  vertical-align: middle;
+}
+.lib-trap-table .lib-abbr {
+  display: block;
+  width: fit-content;
+  margin: 2px 0 0;
+}
+.lib-size-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-4);
+}
+.lib-size-wrap {
+  max-height: 360px;
+  overflow: auto;
+}
+.lib-size-wrap th {
+  position: sticky;
+  top: 0;
+}
+.lib-more {
+  margin-top: var(--space-3);
+}
+
+/* Dar ekranda sözlük tablosu kartlara dönüşür: kullanıcının dili başlık, diğer diller altta üç sütun */
+@media (max-width: 720px) {
+  .lib-gwrap {
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .lib-gtable thead {
+    display: none;
+  }
+  .lib-gtable,
+  .lib-gtable tbody {
+    display: block;
+    width: 100%;
+  }
+  .lib-gtable tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2);
+    overflow: hidden;
+  }
+  .lib-gtable td {
+    display: block;
+    border-bottom: 0;
+    padding: 6px 10px 8px;
+    font-size: var(--fs-xs);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .lib-gtable td.lib-me {
+    grid-column: 1 / -1;
+    font-size: var(--fs-md);
+    padding: 9px 12px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .lib-gtable td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-3);
+  }
+  .lib-gtable td.lib-me::before {
+    display: none;
+  }
+  .lib-gtable .lib-abbr {
+    margin-left: 4px;
+    font-size: 0.66rem;
+  }
+  .lib-symtable tr {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+  .lib-symtable td.lib-me {
+    grid-column: auto;
+    border-bottom: 0;
+    font-size: var(--fs-sm);
+  }
+  .lib-symtable td:nth-child(n + 4) {
+    grid-column: 1 / -1;
+    border-top: 1px dashed var(--line);
+  }
+  .lib-weights tr {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lib-weights td:nth-child(2),
+  .lib-weights td:nth-child(3) {
+    grid-column: span 2;
+  }
+}

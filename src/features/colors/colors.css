@@ -1,0 +1,599 @@
+/* Renk stüdyosu (.cs-) */
+
+/* ── Merkez ── */
+.cs-card {
+  display: flex;
+  flex-direction: column;
+}
+.cs-art {
+  display: grid;
+  height: 74px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.cs-art-pal {
+  grid-template-columns: repeat(5, 1fr);
+}
+.cs-art-str {
+  grid-template-rows: repeat(9, 1fr);
+}
+.cs-art-tmp {
+  grid-template-columns: repeat(20, 1fr);
+}
+.cs-art-gr {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  padding: 6px;
+  background: var(--paper-3);
+}
+.cs-art-gr span {
+  border-radius: 4px;
+}
+.cs-card-body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+.cs-card .card-title {
+  display: block;
+}
+.cs-card-icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.cs-card-icon svg {
+  width: 21px;
+  height: 21px;
+}
+.cs-card-desc {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.cs-card-arrow {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+/* ── Sayfa ── */
+.cs-back {
+  margin: 0 0 var(--space-2) calc(-1 * var(--space-2));
+}
+.cs-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.cs-title-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  flex: none;
+}
+.cs-title-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.cs-intro {
+  margin-top: calc(-1 * var(--space-3));
+  max-width: 70ch;
+}
+.cs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+.cs-grid > * {
+  min-width: 0;
+}
+@media (min-width: 900px) {
+  .cs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cs-span {
+    grid-column: 1 / -1;
+  }
+  .cs-grid-preview .cs-preview-card {
+    position: sticky;
+    top: var(--space-4);
+    grid-row: span 2;
+  }
+}
+.cs-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+.cs-col,
+.cs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.cs-stack {
+  margin-top: var(--space-4);
+}
+@media (min-width: 900px) {
+  .cs-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.cs-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: end;
+}
+.cs-sep {
+  border-top: 1.5px dashed var(--line-2);
+}
+.cs-grid .card-title {
+  margin: 0;
+}
+
+/* ── Seçenek çipleri ── */
+.cs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cs-chips .chip {
+  min-height: 36px;
+  padding: 4px 14px;
+  font-size: var(--fs-sm);
+}
+
+/* ── Renk listesi ── */
+.cs-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.cs-color {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 64px;
+}
+.cs-color-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid var(--card);
+  box-shadow:
+    0 0 0 1px var(--line-2),
+    var(--shadow-sm);
+  font-weight: 900;
+  font-size: var(--fs-md);
+}
+.cs-color-name {
+  font-size: 0.68rem;
+  color: var(--ink-2);
+  text-align: center;
+  line-height: 1.15;
+  max-width: 64px;
+  overflow-wrap: anywhere;
+}
+.cs-color-x {
+  position: absolute;
+  top: -4px;
+  right: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  color: var(--ink-2);
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.cs-color-x svg {
+  width: 13px;
+  height: 13px;
+}
+.cs-color-add {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px dashed var(--line-2);
+  background: transparent;
+  color: var(--ink-2);
+  display: grid;
+  place-items: center;
+}
+.cs-edit-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  min-height: 72px;
+}
+
+/* ── Örgü tuvali ── */
+.cs-knit {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+.cs-flat {
+  border: 1px solid var(--line);
+}
+.cs-preview-scroll {
+  max-height: 72vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+.cs-motifs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.cs-motifs .cs-knit {
+  width: 100% !important;
+}
+
+/* ── Palet ── */
+.cs-pal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--space-2);
+}
+.cs-pal-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  min-height: 112px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: left;
+  transition:
+    transform var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.cs-pal-tile:hover {
+  transform: translateY(-2px);
+}
+.cs-pal-letter {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: auto;
+}
+.cs-pal-name {
+  font-weight: 800;
+  font-size: var(--fs-sm);
+}
+.cs-pal-hex,
+.cs-pal-gray {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+.cs-pairs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-pair {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 4px var(--space-3);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  text-align: left;
+}
+.cs-pair > .chip {
+  grid-column: 2;
+  justify-self: start;
+}
+.cs-pair[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.cs-pair .hint {
+  display: block;
+}
+.cs-pair-dots {
+  display: inline-flex;
+  flex: none;
+}
+.cs-pair-dots span {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--card);
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+.cs-pair-dots span + span {
+  margin-left: -8px;
+}
+.cs-pair-names {
+  font-weight: 800;
+  font-size: var(--fs-sm);
+}
+.cs-strip {
+  display: inline-flex;
+  height: 22px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex: none;
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+.cs-strip span {
+  width: 14px;
+}
+
+/* ── Şerit ── */
+.cs-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.cs-bars li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px var(--space-2);
+  align-items: center;
+}
+.cs-bar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.cs-bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.cs-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+.cs-bars li > .small {
+  grid-row: 1;
+  grid-column: 2;
+}
+.cs-runs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cs-runs li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--line-2);
+  font-size: var(--fs-sm);
+}
+.cs-runs li:last-child {
+  border-bottom: 0;
+}
+.cs-run-swatch {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: var(--fs-xs);
+  color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Sıcaklık ── */
+.cs-ranges {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-ranges li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.cs-limit {
+  width: 112px;
+  flex: none;
+}
+.cs-limit .input {
+  min-height: 36px;
+  padding: 4px 8px;
+}
+.cs-places {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.cs-place {
+  white-space: normal;
+  text-align: left;
+}
+.cs-date {
+  width: auto;
+  min-width: 0;
+}
+.cs-day-preview {
+  display: grid;
+  place-items: center;
+  min-height: 72px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+}
+.cs-cal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-4) var(--space-3);
+}
+.cs-cal.big {
+  grid-template-columns: minmax(0, 420px);
+  justify-content: center;
+}
+.cs-month-name {
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+.cs-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+.cs-wd {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--ink-3);
+  text-align: center;
+  text-transform: uppercase;
+}
+.cs-day {
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  font-size: 0.62rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+.cs-day.empty {
+  background: repeating-linear-gradient(-45deg, var(--paper-2) 0 3px, var(--paper-3) 3px 6px);
+  color: var(--ink-3);
+}
+.cs-cal.big .cs-day {
+  font-size: var(--fs-sm);
+  border-radius: 8px;
+}
+.cs-cal.big .cs-wd {
+  font-size: var(--fs-xs);
+}
+.cs-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px var(--space-4);
+}
+.cs-sum-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  gap: var(--space-3);
+  align-items: end;
+}
+
+/* ── Büyükanne karesi ── */
+.cs-granny {
+  display: grid;
+  gap: 3px;
+  padding: 6px;
+  background: var(--paper-3);
+  border-radius: var(--radius-sm);
+}
+.cs-sq {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cs-sq .cs-sq-art {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cs-sq:hover,
+.cs-sq:focus-visible {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 1px;
+  z-index: 1;
+}
+.cs-sq-lock {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+}
+.cs-sq-lock svg {
+  width: 11px;
+  height: 11px;
+}
+.cs-combos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 340px;
+  overflow: auto;
+}
+.cs-combos li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.cs-combos svg {
+  flex: none;
+  border-radius: 4px;
+}
+
+.cs-page .field > .stepper {
+  align-self: flex-start;
+}
