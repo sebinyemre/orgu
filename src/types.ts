@@ -111,7 +111,8 @@ export interface JournalEntry {
   id: string;
   date: number;
   text: string;
-  mood?: '😍' | '🙂' | '😐' | '😩' | '🤯';
+  /** 1 (zorlandım) … 5 (çok keyifli) */
+  mood?: 1 | 2 | 3 | 4 | 5;
   rowsDone?: number;
   minutes?: number;
 }

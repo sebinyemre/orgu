@@ -30,7 +30,7 @@ Bu kurallar kesindir:
 | `src/features/chart`, `src/engine/chart/*` (draw.ts hariç), `src/engine/image` | Kareli kağıt |
 | `src/features/projects`, `src/features/counters`, `src/features/stash` | Projeler, sayaçlar, ip sepeti |
 | `src/features/recipe`, `src/engine/patterns` | Tarif hazırlayıcı |
-| `src/features/calculators`, `src/features/colors`, `src/knowledge/sizes.ts` | Hesaplayıcılar, renk stüdyosu |
+| `src/features/calculators`, `src/features/colors` | Hesaplayıcılar, renk stüdyosu |
 
 Ortak dosyada değişiklik gerekiyorsa kendi klasöründe yardımcı yaz, ya da değişikliği raporunda öner.
 
