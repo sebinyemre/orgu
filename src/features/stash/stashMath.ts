@@ -13,15 +13,15 @@ export function sizesFor(kind: ToolKind): NeedleSize[] {
   return isHookKind(kind) ? HOOK_SIZES : NEEDLE_SIZES;
 }
 
-/** "(çelik)" gibi Türkçe veri notlarını geçerli dildeki kelimeyle değiştirir */
-export function localizeUs(us: string | undefined, steel: string): string | undefined {
-  return us?.replace('(çelik)', `(${steel})`);
+/** US numarası; ince çelik tığlarda geçerli dildeki "çelik" notuyla */
+export function localizeUs(us: string | undefined, steel: string, isSteel?: boolean): string | undefined {
+  return us && isSteel ? `${us} (${steel})` : us;
 }
 
 /** Aletin numara karşılıkları (US/UK) */
 export function toolSizeInfo(t: Pick<Tool, 'kind' | 'sizeMm'>, steel = 'steel'): { mm: number; us?: string; uk?: string } {
   const e = sizesFor(t.kind).find((s) => Math.abs(s.mm - t.sizeMm) < 0.001);
-  return { mm: t.sizeMm, us: localizeUs(e?.us, steel), uk: e?.uk };
+  return { mm: t.sizeMm, us: localizeUs(e?.us, steel, e?.steel), uk: e?.uk };
 }
 
 /** Şiş ölçerde gösterilen yaygın numaralar (mm) */

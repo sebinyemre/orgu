@@ -1,5 +1,5 @@
-import { SYMBOL_BY_ID, glyphOf, type ChartSymbol, type SymbolStyle } from '@/knowledge/symbols';
-import { useLang } from '@/i18n';
+import { SYMBOL_BY_ID, glyphOf, symbolName, type ChartSymbol, type SymbolStyle } from '@/knowledge/symbols';
+import { useTerms } from './Term';
 
 interface Props {
   symbol: ChartSymbol | string;
@@ -18,13 +18,13 @@ interface Props {
 
 /** Grafik sembolünü SVG olarak çizer (paletler, lejantlar, dersler için). */
 export function SymbolGlyph({ symbol, size = 28, ink = 'currentColor', bg = 'var(--card)', weight = 8, title, className, framed, style = 'cyc' }: Props) {
-  const lang = useLang();
+  const { ctx } = useTerms();
   const sym = typeof symbol === 'string' ? SYMBOL_BY_ID[symbol] : symbol;
   if (!sym) return null;
   const g = glyphOf(sym, style);
   const span = sym.span ?? 1;
   const w = size * span;
-  const label = title ?? sym.name[lang];
+  const label = title ?? symbolName(sym, ctx);
   return (
     <svg width={w} height={size} viewBox={`0 0 ${100 * span} 100`} className={className} role="img" aria-label={label}>
       <title>{label}</title>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { NotebookPen, Ruler, Scissors, Spool } from 'lucide-react';
 import type { Project } from '@/types';
@@ -10,12 +11,19 @@ import { projectProgress, useProjects } from '@/store/projects';
 import { Callout } from '@/ui/Callout';
 import { SafePatternView } from '../SafeLazy';
 import { PRJ } from '../i18n';
+import { useTerms } from '@/ui/Term';
+import { useSettings } from '@/store/settings';
+import { relocalizePattern } from '@/features/recipe/relocalize';
 
 export function PatternTab({ project: p }: { project: Project }) {
   const t = useMsgs(PRJ);
   const tc = useMsgs(COMMON);
   const toggleStep = useProjects((s) => s.toggleStep);
-  if (!p.pattern) {
+  const { ctx } = useTerms();
+  const units = useSettings((s) => s.units);
+  // kaydedildiği dilde kalmasın: başlık ve özet de geçerli dilde ve birimde gösterilir
+  const shown = useMemo(() => (p.pattern ? relocalizePattern(p.pattern, ctx, units) : undefined), [p.pattern, ctx.lang, ctx.trabzan, ctx.crochetEn, units]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!p.pattern || !shown) {
     return (
       <EmptyState
         title={t.noPattern}
@@ -37,7 +45,7 @@ export function PatternTab({ project: p }: { project: Project }) {
       </EmptyState>
     );
   }
-  const pat = p.pattern;
+  const pat = shown;
   const total = pat.sections.reduce((n, s) => n + s.steps.length, 0);
   const progress = projectProgress(p);
   return (

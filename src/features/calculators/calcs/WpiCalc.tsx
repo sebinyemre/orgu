@@ -4,7 +4,7 @@ import { useLang, useMsgs } from '@/i18n';
 import { Callout } from '@/ui/Callout';
 import { Stepper } from '@/ui/Field';
 import { useTerms } from '@/ui/Term';
-import { YARN_WEIGHTS, typicalGauge, weightFromWpi } from '@/knowledge/yarnWeights';
+import { YARN_WEIGHTS, typicalGauge, weightFromWpi, weightAliases } from '@/knowledge/yarnWeights';
 import { fmt } from '@/lib/format';
 import type { YarnWeightId } from '@/types';
 import { CALC } from '../i18n';
@@ -33,7 +33,7 @@ export default function WpiCalc() {
   const stRange = (r: [number, number]) => `${fmt(perSpan(r[0], spanCm), 0, lang)}–${fmt(perSpan(r[1], spanCm), 0, lang)}`;
   const lengthText = len(lengthCm, 1);
   // takma adlar Türkçe ve İngilizce karışık; diğer dillerde yalnızca uluslararası (İngilizce) adlar
-  const aliases = lang === 'tr' ? w.aliases : w.aliases.filter((a) => !/[çğıöşü]|ipi|ince|\bkat\b|yün|kalın|dev|orta|pamu|merserize|bebe|kol|kadife/i.test(a));
+  const aliases = weightAliases(w, lang);
 
   return (
     <CalcLayout

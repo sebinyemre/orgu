@@ -70,7 +70,7 @@ export default function NeedleSizesCalc() {
             </thead>
             <tbody>
               {list.map((s) => {
-                const us = cleanUs(s.us);
+                const us = cleanUs(s.us, s.steel);
                 const hit = hits.has(s.mm);
                 const ref = hit && !marked ? firstHit : undefined;
                 if (hit) marked = true;

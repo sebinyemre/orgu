@@ -2,6 +2,7 @@
  * Kareli kağıt düzenleyicisi: telefonda alttaki araç çubuğu ve alttan açılan paneller,
  * masaüstünde solda araç rayı, sağda sekmeli panel.
  */
+import { fillTerms } from '@/knowledge/terms';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Highlighter, Maximize, PanelBottomOpen, Redo2, Undo2, X, ZoomIn, ZoomOut } from 'lucide-react';
@@ -322,7 +323,7 @@ function makePrintData(e: ExportCtx): PrintData {
     symbols: usedSymbols(c)
       .map((id) => SYMBOL_BY_ID[id])
       .filter(Boolean)
-      .map((s) => ({ id: s.id, name: symbolName(s, e.terms), meaning: c.craft === 'knit' && s.rs?.[lang] ? `${e.t.rsSide}: ${s.rs[lang]} · ${e.t.wsSide}: ${s.ws?.[lang] ?? ''}` : s.hint[lang] })),
+      .map((s) => ({ id: s.id, name: symbolName(s, e.terms), meaning: c.craft === 'knit' && s.rs?.[lang] ? `${e.t.rsSide}: ${s.rs[lang]} · ${e.t.wsSide}: ${s.ws?.[lang] ?? ''}` : fillTerms(s.hint[lang], e.terms) })),
     intro: text.intro,
     rows: text.rows.map(rowLine),
     notes: c.notes,

@@ -12,7 +12,7 @@ interface ProjectsState {
   /** en son açılan/çalışılan proje */
   activeId?: string;
   create: (p: NewProject) => Project;
-  /** sihirbaz tarifinden proje oluşturur (sıra sayacı ve tekrar sayacı hazır gelir) */
+  /** hazır tariften proje oluşturur (sıra sayacı ve tekrar sayacı hazır gelir) */
   createFromPattern: (pattern: GeneratedPattern, extra?: Partial<Project>) => Project;
   update: (id: string, patch: Partial<Project>) => void;
   remove: (id: string) => void;

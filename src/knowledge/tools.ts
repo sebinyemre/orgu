@@ -6,6 +6,8 @@ export interface NeedleSize {
   mm: number;
   us?: string;
   uk?: string;
+  /** ABD'de ince çelik tığ numarası (dantel tığı) */
+  steel?: boolean;
 }
 
 /** Şiş ölçüleri (mm ↔ US ↔ eski UK/Kanada) */
@@ -39,12 +41,12 @@ export const NEEDLE_SIZES: NeedleSize[] = [
 
 /** Tığ ölçüleri (mm ↔ US harf/numara ↔ eski UK) */
 export const HOOK_SIZES: NeedleSize[] = [
-  { mm: 0.6, us: '14 (çelik)' },
-  { mm: 0.75, us: '12 (çelik)' },
-  { mm: 1.0, us: '10 (çelik)' },
-  { mm: 1.25, us: '8 (çelik)' },
-  { mm: 1.5, us: '7 (çelik)' },
-  { mm: 1.75, us: '4 (çelik)' },
+  { mm: 0.6, us: '14', steel: true },
+  { mm: 0.75, us: '12', steel: true },
+  { mm: 1.0, us: '10', steel: true },
+  { mm: 1.25, us: '8', steel: true },
+  { mm: 1.5, us: '7', steel: true },
+  { mm: 1.75, us: '4', steel: true },
   { mm: 2.0, uk: '14' },
   { mm: 2.25, us: 'B-1', uk: '13' },
   { mm: 2.5, uk: '12' },

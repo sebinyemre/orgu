@@ -169,7 +169,7 @@ function ChartBlock({ p, mode }: { p: StitchPattern; mode: 'flat' | 'round' }) {
                     ) : s.basic && s.group === 'temel' && s.basic !== 'ch' ? (
                       basicRef(s.basic)
                     ) : (
-                      s.hint[lang]
+                      terms.fill(s.hint[lang])
                     )}
                   </span>
                 </span>

@@ -267,12 +267,12 @@ export function normalizeSwatch(stitches: number, widthCm: number, rows: number,
 /* ── Şiş/tığ tablosu araması ───────────────────────────── */
 
 /** Tığ tablosundaki "14 (çelik)" gibi US değerlerini sadeleştirir */
-export function cleanUs(us: string | undefined): {
+export function cleanUs(us: string | undefined, steelFlag?: boolean): {
   us: string;
   steel: boolean;
 } {
-  if (!us) return { us: '', steel: false };
-  const steel = /\(.*\)/.test(us);
+  if (!us) return { us: '', steel: !!steelFlag };
+  const steel = steelFlag ?? /\(.*\)/.test(us);
   return { us: us.replace(/\s*\(.*\)\s*/, '').trim(), steel };
 }
 

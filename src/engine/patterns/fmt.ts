@@ -51,7 +51,7 @@ export function toolSize(mm: number, hook: boolean, lang: Lang): string {
   const list = hook ? HOOK_SIZES : NEEDLE_SIZES;
   const hit = list.find((s) => Math.abs(s.mm - mm) < 0.06);
   const mmTxt = `${num(mm, lang, 2)} mm`;
-  if (!hit?.us || /\(/.test(hit.us)) return mmTxt;
+  if (!hit?.us || hit.steel) return mmTxt;
   return `${mmTxt} (US ${hit.us})`;
 }
 

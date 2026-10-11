@@ -138,7 +138,7 @@ function ProjectForm({ project, initialStatus, onClose }: Props) {
           {sizes.map((s) => (
             <option key={s.mm} value={s.mm}>
               {mmText(s.mm, lang)}
-              {s.us ? ` · US ${localizeUs(s.us, ts.steel)}` : ''}
+              {s.us ? ` · US ${localizeUs(s.us, ts.steel, s.steel)}` : ''}
             </option>
           ))}
         </select>

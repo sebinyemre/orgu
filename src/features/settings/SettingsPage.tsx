@@ -38,6 +38,8 @@ export default function SettingsPage() {
     if (!(await confirmDialog(t.importText, { title: t.importTitle, confirmLabel: t.importConfirm, danger: true }))) return;
     const r = importAll(data);
     toast(r.ok ? t.imported : t.readError);
+    // açık sayfalardaki depolar eski veriyi geri yazmasın: yeniden yükle
+    if (r.ok) setTimeout(() => location.reload(), 900);
   };
 
   const wipe = async () => {

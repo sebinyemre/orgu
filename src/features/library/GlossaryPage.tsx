@@ -5,7 +5,8 @@ import type { Lang } from '@/types';
 import { PageHeader } from '@/ui/PageHeader';
 import { EmptyState } from '@/ui/EmptyState';
 import { SymbolGlyph } from '@/ui/SymbolGlyph';
-import { useTerms } from '@/ui/Term';
+import { getTermsCtx, useTerms } from '@/ui/Term';
+import { fillTerms } from '@/knowledge/terms';
 import { LANGS, useLang, useMsgs } from '@/i18n';
 import { COMMON } from '@/i18n/common';
 import { TechniqueLink } from '@/features/learn/TechniqueLink';
@@ -175,7 +176,7 @@ function crochetHow(s: ChartSymbol, lang: Lang): string {
     const ref = `US ${b.us} · UK ${b.uk}`;
     return b.yarnOvers ? `${yarnOverText(b.yarnOvers, lang)} · ${ref}` : ref;
   }
-  return s.hint[lang];
+  return fillTerms(s.hint[lang], getTermsCtx());
 }
 
 function SymbolTable({ list, knit, query }: { list: ChartSymbol[]; knit: boolean; query: string }) {
@@ -251,7 +252,7 @@ function SizeMini({ title, list, steel }: { title: string; list: typeof NEEDLE_S
           </thead>
           <tbody>
             {list.map((s) => {
-              const us = cleanUs(s.us);
+              const us = cleanUs(s.us, s.steel);
               return (
                 <tr key={s.mm}>
                   <td className="tabular">

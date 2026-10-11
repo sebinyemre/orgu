@@ -4,6 +4,7 @@ import { SYMBOL_BY_ID, SYMBOL_GROUP_LABEL, symbolName, symbolsFor, type ChartSym
 import { Segmented } from '@/ui/Segmented';
 import { SymbolGlyph } from '@/ui/SymbolGlyph';
 import { useTerms } from '@/ui/Term';
+import { fillTerms } from '@/knowledge/terms';
 import { useMsgs } from '@/i18n';
 import { usedSymbols } from '@/engine/chart/grid';
 import { TechniqueLink } from '@/features/learn/TechniqueLink';
@@ -79,7 +80,7 @@ export function SymbolsPanel({ craft }: { craft: Craft }) {
               <div style={{ fontWeight: 800 }}>
                 {symbolName(sel, ctx)} <span className="chip">{sel.en}</span>
               </div>
-              <div className="small muted">{sel.hint[lang]}</div>
+              <div className="small muted">{fillTerms(sel.hint[lang], ctx)}</div>
               {sel.span && sel.span > 1 && <div className="xsmall faint">{t.span(sel.span)}</div>}
               {sel.rs?.[lang] && craft === 'knit' && (
                 <div className="xsmall" style={{ marginTop: 4 }}>
@@ -107,7 +108,7 @@ export function SymbolsPanel({ craft }: { craft: Craft }) {
                       · {t.rsSide}: {s.rs[lang]} · {t.wsSide}: {s.ws?.[lang]}
                     </span>
                   ) : (
-                    <span className="faint"> · {s.hint[lang]}</span>
+                    <span className="faint"> · {fillTerms(s.hint[lang], ctx)}</span>
                   )}
                 </span>
               </li>

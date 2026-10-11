@@ -152,7 +152,7 @@ export interface Project {
   finishedAt?: number;
 }
 
-/* ── Model sihirbazı çıktısı ───────────────────────────── */
+/* ── Tarif hazırlayıcı çıktısı ───────────────────────────── */
 export interface PatternStep {
   id: string;
   /** "3. tur", "1.–4. sıra" gibi */
@@ -211,7 +211,7 @@ export interface GeneratedPattern {
   sections: PatternSection[];
   notes: string[];
   diagram?: PatternDiagram;
-  /** sihirbazda girilen parametreler (yeniden üretmek için) */
+  /** tarif formunda girilen parametreler (yeniden üretmek için) */
   params: Record<string, unknown>;
   createdAt: number;
 }

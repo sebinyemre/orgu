@@ -87,7 +87,7 @@ function ToolForm({ tool, preset, onClose, onSave }: Props) {
             {sizes.map((s) => (
               <option key={s.mm} value={s.mm}>
                 {mmText(s.mm, lang)}
-                {[s.us && ` · US ${localizeUs(s.us, t.steel)}`, s.uk && ` · UK ${s.uk}`].filter(Boolean).join('')}
+                {[s.us && ` · US ${localizeUs(s.us, t.steel, s.steel)}`, s.uk && ` · UK ${s.uk}`].filter(Boolean).join('')}
               </option>
             ))}
           </select>

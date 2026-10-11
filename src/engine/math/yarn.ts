@@ -1,13 +1,17 @@
 /** İp miktarı tahminleri */
 import type { Craft, Gauge } from '@/types';
 
-/** 1 ilmeğin ip tüketimi / ilmek eni oranı (ampirik) */
+/**
+ * 1 ilmeğin ip tüketimi / ilmek eni oranı (ampirik).
+ * Şişte orta kalınlık için "ilmek başına yaklaşık 2,5 cm" kuralına ve yayımlanmış atkı/bere
+ * tariflerinin metrajlarına göre ayarlandı; tığ ilmekleri aynı alanda daha çok ip harcar.
+ */
 const PER_WIDTH: Record<string, number> = {
-  knit: 5.9,
-  sc: 6.9,
-  hdc: 9.0,
-  dc: 11.6,
-  tr: 14.6,
+  knit: 4.8,
+  sc: 6.4,
+  hdc: 8.3,
+  dc: 10.7,
+  tr: 13.5,
 };
 
 export type StitchKind = 'knit' | 'sc' | 'hdc' | 'dc' | 'tr';

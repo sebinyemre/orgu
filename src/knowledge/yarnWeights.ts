@@ -13,8 +13,10 @@ export interface YarnWeightInfo {
   name: L10n;
   /** İngilizce kategori adı */
   en: string;
-  /** ip türü adları (TR + yaygın EN) */
+  /** uluslararası ticari adlar (etiketlerde ve tariflerde) */
   aliases: string[];
+  /** Türkiye’de rafta kullanılan adlar */
+  aliasesTr: string[];
   /** rafta nasıl tarif edilir */
   shelf: L10n;
   /** 2,5 cm'ye (1 inç) sarım sayısı aralığı */
@@ -41,7 +43,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 0,
     name: l('Dantel', 'Lace', 'Encaje', 'Renda'),
     en: 'Lace',
-    aliases: ['dantel ipi', 'ince merserize', 'lace', 'cobweb', 'light fingering'],
+    aliases: ['lace', 'cobweb', 'light fingering'],
+    aliasesTr: ['dantel ipi', 'ince merserize'],
     shelf: l('Çok ince: oya, dantel ve tığ dantelleri (ör. 10–20 numara koton).', 'Very fine: lace shawls, doilies and thread crochet.', 'Muy fino: chales de encaje, tapetes y ganchillo con hilo.', 'Muito fino: xales rendados, toalhinhas e crochê com linha.'),
     wpi: [30, 40],
     needleMm: [1.5, 2.25],
@@ -57,7 +60,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 1,
     name: l('Süper ince', 'Super fine', 'Súper fino', 'Superfino'),
     en: 'Super Fine',
-    aliases: ['çorap ipi', 'bebe ince', 'fingering', 'sock', '4 kat'],
+    aliases: ['fingering', 'sock'],
+    aliasesTr: ['çorap ipi', 'bebe ince', '4 kat'],
     shelf: l('Çorap ve ince bebek yünleri; 2–3 numara şişle örülür.', 'Sock and fingering yarns; knit on 2–3 mm needles.', 'Hilos para calcetines y bebé finos; agujas de 2–3 mm.', 'Fios para meias e bebê finos; agulhas de 2–3 mm.'),
     wpi: [14, 30],
     needleMm: [2.25, 3.25],
@@ -73,7 +77,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 2,
     name: l('İnce', 'Fine', 'Fino', 'Fino'),
     en: 'Fine',
-    aliases: ['bebe yünü', 'sport', '5 kat', 'baby'],
+    aliases: ['sport', 'baby'],
+    aliasesTr: ['bebe yünü', '5 kat'],
     shelf: l('Bebek yünleri ve ince pamuklar; 3–3,5 numara şiş, 3–4 numara tığ.', 'Sport and baby yarns; 3–3.75 mm needles, 3.5–4.5 mm hooks.', 'Hilos de bebé y algodones finos; agujas de 3–3,75 mm.', 'Fios de bebê e algodões finos; agulhas de 3–3,75 mm.'),
     wpi: [12, 18],
     needleMm: [3.25, 3.75],
@@ -89,7 +94,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 3,
     name: l('Hafif', 'Light', 'Ligero', 'Leve'),
     en: 'Light',
-    aliases: ['DK', 'ince yün', 'light worsted', '8 kat', 'amigurumi pamuğu'],
+    aliases: ['DK', 'light worsted'],
+    aliasesTr: ['ince yün', '8 kat', 'amigurumi pamuğu'],
     shelf: l('Günlük örgü ipleri ve amigurumi pamukları; 3,5–4,5 numara şiş.', 'DK and light worsted; 3.75–4.5 mm needles.', 'Grosor DK; agujas de 3,75–4,5 mm.', 'Fios DK; agulhas de 3,75–4,5 mm.'),
     wpi: [11, 15],
     needleMm: [3.75, 4.5],
@@ -105,7 +111,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 4,
     name: l('Orta', 'Medium', 'Medio', 'Médio'),
     en: 'Medium',
-    aliases: ['worsted', 'aran', 'afghan', 'orta kalınlık', '10 kat'],
+    aliases: ['worsted', 'aran', 'afghan'],
+    aliasesTr: ['orta kalınlık', '10 kat'],
     shelf: l('Rafların en yaygın kalınlığı; 4,5–5,5 numara şiş, 5–6 numara tığ.', 'Worsted and aran, the most common weight; 4.5–5.5 mm needles.', 'El grosor más común (worsted, aran); agujas de 4,5–5,5 mm.', 'A espessura mais comum (worsted, aran); agulhas de 4,5–5,5 mm.'),
     wpi: [9, 12],
     needleMm: [4.5, 5.5],
@@ -121,7 +128,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 5,
     name: l('Kalın', 'Bulky', 'Grueso', 'Grosso'),
     en: 'Bulky',
-    aliases: ['chunky', 'kalın yün', 'craft', 'rug', '12 kat'],
+    aliases: ['chunky', 'craft', 'rug'],
+    aliasesTr: ['kalın yün', '12 kat'],
     shelf: l('Kışlık kalın yünler; 6–8 numara şiş, 6,5–9 numara tığ.', 'Chunky winter yarns; 5.5–8 mm needles.', 'Hilos gruesos de invierno; agujas de 5,5–8 mm.', 'Fios grossos de inverno; agulhas de 5,5–8 mm.'),
     wpi: [6, 9],
     needleMm: [5.5, 8],
@@ -137,7 +145,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 6,
     name: l('Çok kalın', 'Super bulky', 'Muy grueso', 'Muito grosso'),
     en: 'Super Bulky',
-    aliases: ['super chunky', 'roving', 'çok kalın yün', 'kadife ip (kalın)'],
+    aliases: ['super chunky', 'roving'],
+    aliasesTr: ['çok kalın yün', 'kadife ip (kalın)'],
     shelf: l('Çok kalın ipler ve kalın kadife ipler; 9–12 numara şiş.', 'Super chunky and thick chenille yarns; 8–12.75 mm needles.', 'Hilos muy gruesos y chenilla gruesa; agujas de 8–12 mm.', 'Fios muito grossos e chenille grossa; agulhas de 8–12 mm.'),
     wpi: [5, 6],
     needleMm: [8, 12.75],
@@ -153,7 +162,8 @@ export const YARN_WEIGHTS: YarnWeightInfo[] = [
     id: 7,
     name: l('Jumbo', 'Jumbo', 'Jumbo', 'Jumbo'),
     en: 'Jumbo',
-    aliases: ['jumbo', 'kol örgüsü', 'dev ip', 'chenille jumbo'],
+    aliases: ['jumbo', 'chenille jumbo'],
+    aliasesTr: ['kol örgüsü', 'dev ip'],
     shelf: l('Kol örgüsü ve 15 mm üzeri şişler için dev ipler.', 'Giant yarns for arm knitting and needles over 12.75 mm.', 'Hilos gigantes para tejer con los brazos y agujas de más de 12 mm.', 'Fios gigantes para tricô com os braços e agulhas acima de 12 mm.'),
     wpi: [1, 4],
     needleMm: [12.75, 25],
@@ -237,4 +247,9 @@ export function weightFromLength(metersPer100g: number): YarnWeightInfo {
     }
   }
   return best;
+}
+
+/** Kalınlığın gösterilecek diğer adları: Türkçede raf adları önce */
+export function weightAliases(w: { aliases: string[]; aliasesTr: string[] }, lang: string): string[] {
+  return lang === 'tr' ? [...w.aliasesTr, ...w.aliases] : w.aliases;
 }

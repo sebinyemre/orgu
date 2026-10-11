@@ -59,7 +59,7 @@ function SizeSelect({ id, list, value, onChange, none, steel }: { id: string; li
       {list.map((s) => (
         <option key={s.mm} value={s.mm}>
           {mmText(s.mm, lang)}
-          {s.us ? ` · US ${localizeUs(s.us, steel)}` : ''}
+          {s.us ? ` · US ${localizeUs(s.us, steel, s.steel)}` : ''}
         </option>
       ))}
     </select>
