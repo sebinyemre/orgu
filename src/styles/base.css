@@ -259,4 +259,14 @@ table {
   .no-print {
     display: none !important;
   }
+  /* yan menü gizlenince içerik tüm sayfayı kullansın */
+  .shell {
+    display: block !important;
+  }
+  .shell > main,
+  .main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
 }
