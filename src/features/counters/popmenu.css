@@ -1,0 +1,80 @@
+/* Küçük açılır menü (.pm-*), sayaç, sepet ve proje kartlarında ortak */
+
+/* ── Açılır menü ─────────────────────────────────────── */
+.pm {
+  position: relative;
+  flex: none;
+}
+.pm-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 210px;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  animation: pop-in 140ms var(--ease);
+}
+.pm-list[data-align='start'] {
+  right: auto;
+  left: 0;
+}
+.pm-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+}
+.pm-item:hover,
+.pm-item:focus-visible {
+  background: var(--paper-2);
+  outline: none;
+}
+.pm-item svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: var(--ink-3);
+}
+.pm-item[data-danger] {
+  color: var(--danger);
+}
+.pm-item[data-danger] svg {
+  color: var(--danger);
+}
+.pm-item[aria-current] {
+  font-weight: 800;
+  background: var(--paper-2);
+}
+.pm-item:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pm-sep {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--line);
+}
+
+/* açık menüsü olan kart komşularının üstünde kalsın */
+.cnt-widget:has(.pm-list),
+.stash-tag:has(.pm-list),
+.stash-tool:has(.pm-list),
+.prj-card:has(.pm-list),
+.prj-chart:has(.pm-list) {
+  z-index: 20;
+}

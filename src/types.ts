@@ -132,13 +132,15 @@ export interface Project {
   chartIds: string[];
   counters: Counter[];
   gauge?: Gauge;
+  /** ölçü örneği notu */
+  gaugeNotes?: string;
   /** proje için kullanılan şiş/tığ (mm), envanterde yoksa */
   toolSizeMm?: number;
   notes: string;
   journal: JournalEntry[];
   /** IndexedDB'deki fotoğraf anahtarları */
   photoIds: string[];
-  /** Model sihirbazından gelen tarif */
+  /** Tarif hazırlayıcıdan ya da eserlerden gelen tarif */
   pattern?: GeneratedPattern;
   /** tarifte tamamlanan adım id'leri */
   doneSteps: string[];

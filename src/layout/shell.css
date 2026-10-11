@@ -5,7 +5,8 @@
 }
 
 /* İki dünya: Öğren (kiremit) ve Yarat (denim). Vurgu rengi dünyaya göre değişir. */
-.shell[data-world='create'] {
+.shell[data-world='create'],
+:root[data-world='create'] {
   --accent: var(--denim);
   --accent-hover: color-mix(in srgb, var(--denim) 85%, black);
   --accent-soft: var(--denim-soft);

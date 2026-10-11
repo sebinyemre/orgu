@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { Counter, GeneratedPattern, JournalEntry, Project } from '@/types';
 import { uid } from '@/lib/id';
 import { incrementCounter, makeCounter, type FiredReminder } from '@/engine/counters';
+import { defaultCounterName } from './counterNames';
 
 export type NewProject = Partial<Omit<Project, 'id' | 'createdAt' | 'updatedAt'>> & Pick<Project, 'name' | 'craft'>;
 
@@ -49,7 +50,7 @@ export const useProjects = create<ProjectsState>()(
           toolIds: [],
           yarnIds: [],
           chartIds: [],
-          counters: [makeCounter('Sıra')],
+          counters: [makeCounter(defaultCounterName('row'))],
           notes: '',
           journal: [],
           photoIds: [],
@@ -65,8 +66,8 @@ export const useProjects = create<ProjectsState>()(
       },
 
       createFromPattern: (pattern, extra) => {
-        const row = makeCounter(pattern.craft === 'crochet' ? 'Tur / Sıra' : 'Sıra');
-        const st = makeCounter('İlmek', { style: 'centik' });
+        const row = makeCounter(defaultCounterName(pattern.craft === 'crochet' ? 'round' : 'row'));
+        const st = makeCounter(defaultCounterName('stitch'), { style: 'centik' });
         return get().create({
           name: pattern.title,
           craft: pattern.craft,
@@ -94,7 +95,7 @@ export const useProjects = create<ProjectsState>()(
         })),
 
       addCounter: (id, counter) => {
-        const c = makeCounter(counter?.name ?? 'Sayaç', counter);
+        const c = makeCounter(counter?.name ?? defaultCounterName('counter'), counter);
         set((s) => ({ projects: s.projects.map((p) => (p.id === id ? touch({ ...p, counters: [...p.counters, c] }) : p)) }));
         return c;
       },

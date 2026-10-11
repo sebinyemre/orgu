@@ -61,13 +61,13 @@ export const BOTTOM_NAV: Record<World, string[]> = {
   create: ['/yarat', '/projeler', '/kareli', '/araclar'],
 };
 
-const LEARN_PREFIXES = ['/ders', '/desenler', '/sozluk', '/pro'];
+const LEARN_PREFIXES = ['/ders', '/desenler', '/sozluk'];
 const NEUTRAL = ['/ayarlar'];
 
 /** Rota hangi dünyaya ait? Nötr sayfalarda null. */
 export function worldOf(pathname: string): World | null {
   if (NEUTRAL.some((p) => pathname.startsWith(p))) return null;
-  if (pathname === '/' || LEARN_PREFIXES.some((p) => pathname.startsWith(p))) return 'learn';
+  if (pathname === '/' || pathname === '/pro' || LEARN_PREFIXES.some((p) => pathname.startsWith(p))) return 'learn';
   return 'create';
 }
 

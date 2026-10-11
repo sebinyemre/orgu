@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Counter } from '@/types';
 import { incrementCounter, makeCounter, type FiredReminder } from '@/engine/counters';
+import { defaultCounterName } from './counterNames';
 
 interface QuickCountersState {
   counters: Counter[];
@@ -17,9 +18,9 @@ interface QuickCountersState {
 export const useQuickCounters = create<QuickCountersState>()(
   persist(
     (set) => ({
-      counters: [makeCounter('Sıra sayacı')],
+      counters: [makeCounter(defaultCounterName('rowCounter'))],
       add: (c) => {
-        const counter = makeCounter(c?.name ?? 'Sayaç', c);
+        const counter = makeCounter(c?.name ?? defaultCounterName('counter'), c);
         set((s) => ({ counters: [...s.counters, counter] }));
         return counter;
       },

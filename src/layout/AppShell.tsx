@@ -69,6 +69,11 @@ export function AppShell() {
     }
   }, [routeWorld, pathname]);
 
+  // modallar kabuğun dışına (body) açılır; vurgu rengi onlara da geçsin
+  useEffect(() => {
+    document.documentElement.dataset.world = world;
+  }, [world]);
+
   const chromeless = CHROMELESS.some((r) => r.test(pathname));
   const groups = world === 'learn' ? LEARN_NAV : CREATE_NAV;
   const current = [...ALL_ITEMS].sort((a, b) => b.to.length - a.to.length).find((i) => (i.to === '/' ? pathname === '/' : pathname.startsWith(i.to)));

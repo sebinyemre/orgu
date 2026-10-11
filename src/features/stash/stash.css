@@ -1,0 +1,616 @@
+/* İp sepeti ve alet çantası (.stash-*) */
+
+.stash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-5) var(--space-4);
+  align-items: start;
+}
+
+/* ── İp etiketi ──────────────────────────────────────── */
+.stash-tag {
+  --tag-ink: color-mix(in srgb, var(--kraft-ink) 65%, var(--ink));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: radial-gradient(circle at 85% 0%, rgba(255, 255, 255, 0.18), transparent 45%), var(--kraft);
+  color: var(--kraft-ink);
+  border-top: 7px solid var(--yarn);
+  border-radius: 8px 8px 16px 16px;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(var(--tilt, 0deg));
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.stash-tag:nth-child(3n + 1) {
+  --tilt: -0.35deg;
+}
+.stash-tag:nth-child(3n + 2) {
+  --tilt: 0.3deg;
+}
+.stash-tag:hover {
+  transform: translateY(-2px) rotate(var(--tilt, 0deg));
+  box-shadow: var(--shadow-md);
+}
+.stash-tag-hole {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 0 4px color-mix(in srgb, var(--kraft-ink) 22%, transparent);
+  pointer-events: none;
+}
+.stash-tag-main {
+  display: block;
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.stash-tag-main:focus-visible {
+  outline-offset: -4px;
+}
+.stash-tag-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: 22px;
+}
+.stash-tag-top svg {
+  flex: none;
+}
+.stash-tag-brand {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stash-tag-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--tag-ink);
+  overflow-wrap: anywhere;
+}
+.stash-tag-color {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.stash-tag-color .swatch {
+  border-width: 1.5px;
+  border-color: var(--kraft);
+}
+.stash-tag-perf {
+  position: relative;
+  margin: var(--space-3) calc(-1 * var(--space-4));
+  border-top: 2px dashed color-mix(in srgb, var(--kraft-ink) 35%, transparent);
+}
+.stash-tag-perf::before,
+.stash-tag-perf::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+.stash-tag-perf::before {
+  left: -7px;
+}
+.stash-tag-perf::after {
+  right: -7px;
+}
+.stash-tag-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 0;
+}
+.stash-tag-specs dt {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.stash-tag-specs dd {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--tag-ink);
+}
+.stash-tag-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: var(--space-3);
+}
+.stash-tag-total b {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--tag-ink);
+  font-variant-numeric: tabular-nums;
+}
+.stash-tag-total span {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.stash-lot {
+  padding: 1px 8px;
+  border: 1.5px solid color-mix(in srgb, var(--kraft-ink) 45%, transparent);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  transform: rotate(-2deg);
+}
+.stash-tag-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0 var(--space-2) var(--space-3) var(--space-4);
+}
+.stash-ideas-btn {
+  --btn-bg: color-mix(in srgb, var(--card) 85%, transparent);
+  --btn-bd: transparent;
+  --btn-fg: var(--tag-ink);
+  min-height: 36px;
+}
+.stash-tag .pm-trigger {
+  color: var(--kraft-ink);
+}
+
+/* ── Küçük ip satırı ─────────────────────────────────── */
+.stash-mini {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.stash-mini > svg {
+  flex: none;
+}
+.stash-mini-title,
+.stash-mini-sub {
+  display: block;
+}
+.stash-mini-title {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Toplamlar ───────────────────────────────────────── */
+.stash-totals {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.stash-totals::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1.5px dashed var(--line);
+  border-radius: calc(var(--radius-lg) - 5px);
+  pointer-events: none;
+}
+@media (min-width: 760px) {
+  .stash-weight-row {
+    grid-template-columns: 8.5rem minmax(0, 1fr) 4.6rem;
+  }
+  .stash-totals {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+}
+.stash-totals-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-5);
+}
+.stash-weights {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.stash-weights .stat-label {
+  margin-bottom: 4px;
+}
+.stash-weight-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.6rem minmax(0, 1fr) 4.4rem;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-align: left;
+}
+.stash-weight-row:hover {
+  background: var(--paper-2);
+}
+.stash-weight-row[aria-pressed='true'] {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.stash-weight-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stash-weight-bar {
+  display: block;
+  height: 10px;
+}
+.stash-weight-bar > span {
+  display: block;
+  min-width: 3px;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: var(--accent);
+}
+.stash-weight-val {
+  color: var(--ink);
+  text-align: right;
+}
+
+/* ── Filtreler ───────────────────────────────────────── */
+.stash-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.stash-search {
+  position: relative;
+  display: block;
+  grid-column: 1 / -1;
+}
+.stash-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+.stash-search .input {
+  padding-left: 38px;
+}
+@media (min-width: 700px) {
+  .stash-filters {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .stash-search {
+    grid-column: auto;
+  }
+}
+.stash-families {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.stash-families::-webkit-scrollbar {
+  display: none;
+}
+.stash-fam {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 4px 14px 4px 7px;
+  border: 1.5px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.stash-fam svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 4px;
+}
+.stash-fam[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.stash-fam-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Formlar ─────────────────────────────────────────── */
+.stash-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+.stash-weight-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: calc(-1 * var(--space-3));
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--paper-2);
+}
+.stash-weight-info[data-estimate] {
+  background: var(--mustard-soft);
+  border: 1.5px dashed color-mix(in srgb, var(--warning) 60%, transparent);
+}
+.stash-fiber-chip {
+  min-height: 34px;
+  padding: 4px 12px;
+  font-size: var(--fs-sm);
+}
+
+/* ── Ne örerim? ──────────────────────────────────────── */
+.stash-ideas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-3);
+}
+.stash-idea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--card-2);
+}
+.stash-idea[data-fit='short'] {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--line-2);
+}
+.stash-idea-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+.stash-idea-bar {
+  height: 8px;
+  border-radius: 0 4px 4px 0;
+  background: var(--paper-3);
+}
+.stash-idea-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: var(--success);
+}
+.stash-idea[data-fit='tight'] .stash-idea-bar > span {
+  background: var(--warning);
+}
+.stash-idea[data-fit='short'] .stash-idea-bar > span {
+  background: var(--danger);
+}
+
+/* ── Şiş ölçer ───────────────────────────────────────── */
+.stash-gauge {
+  position: relative;
+  padding: var(--space-5) var(--space-4) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, var(--card-2), var(--paper-3));
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.stash-gauge-ruler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 13px;
+  background:
+    repeating-linear-gradient(90deg, var(--ink-3) 0 1px, transparent 1px 40px) 0 0 / 100% 13px no-repeat,
+    repeating-linear-gradient(90deg, var(--ink-3) 0 1px, transparent 1px 8px) 0 0 / 100% 7px no-repeat;
+  opacity: 0.55;
+}
+.stash-gauge-title {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+.stash-gauge-lede {
+  margin: 0 0 var(--space-2);
+  color: var(--ink-2);
+}
+.stash-gauge-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  padding-top: var(--space-2);
+}
+.stash-gauge-row + .stash-gauge-row {
+  border-top: 1.5px dashed var(--line-2);
+}
+.stash-gauge-label {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.stash-gauge-holes {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 0;
+  padding: 4px 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+}
+.stash-gauge-holes::-webkit-scrollbar {
+  display: none;
+}
+.stash-hole {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  width: 42px;
+  min-height: 66px;
+  padding: 4px 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink-3);
+}
+.stash-hole:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+.stash-hole-dot {
+  width: var(--hole);
+  height: var(--hole);
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--ink-3) 70%, transparent);
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  opacity: 0.75;
+}
+.stash-hole[data-owned] {
+  color: var(--ink);
+}
+.stash-hole[data-owned] .stash-hole-dot {
+  border: 0;
+  opacity: 1;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 55%, white), var(--accent));
+  box-shadow:
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+    0 0 0 2px var(--card-2),
+    0 0 0 3.5px var(--accent);
+}
+.stash-hole-mm {
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Alet listesi ────────────────────────────────────── */
+.stash-tools {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-2);
+}
+.stash-tool {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 4px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.stash-tool-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: 8px 6px 8px 10px;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+.stash-tool-mm {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 2px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--paper-2);
+  line-height: 1;
+}
+.stash-tool-mm b {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+.stash-tool-mm small {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ink-3);
+}
+.stash-tool-sizes {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+}
+.stash-tool-meta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
