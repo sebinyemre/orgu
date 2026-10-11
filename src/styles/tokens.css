@@ -1,0 +1,200 @@
+/* ──────────────────────────────────────────────────────────────
+   İlmek İlmek · Tasarım belirteçleri ("atölye masası")
+   Tüm renkler/ölçüler buradan gelir. Bileşenler sabit renk yazmaz.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: light;
+
+  /* Kağıt ve mürekkep */
+  --paper: #fbf6ee;
+  --paper-2: #f4ecdf;
+  --paper-3: #ebe0cf;
+  --card: #fffdf9;
+  --card-2: #fbf7f1;
+  --kraft: #e3cfae;
+  --kraft-ink: #6d5536;
+  --ink: #2f2925;
+  --ink-2: #5d534b;
+  --ink-3: #8f8378;
+  --line: #e6dacb;
+  --line-2: #d5c6b3;
+
+  /* Kareli kağıt */
+  --grid-bg: #fffefb;
+  --grid-line: #cfdde6;
+  --grid-line-strong: #8fb0c4;
+  --grid-number: #6f8ea2;
+
+  /* İp renkleri (vurgular) */
+  --terracotta: #b5523b;
+  --terracotta-soft: #f5e1d8;
+  --mustard: #d39a2c;
+  --mustard-soft: #f8ecd0;
+  --sage: #5f7a61;
+  --sage-soft: #e3ebe0;
+  --plum: #7d4e6d;
+  --plum-soft: #efe2ea;
+  --denim: #46698a;
+  --denim-soft: #e0e8f0;
+  --rose: #c47f7f;
+  --rose-soft: #f6e5e3;
+
+  --accent: var(--terracotta);
+  --accent-hover: #9e4430;
+  --accent-ink: #fffaf5;
+  --accent-soft: var(--terracotta-soft);
+
+  /* Durum */
+  --success: #4c8a59;
+  --success-soft: #e1efe2;
+  --warning: #b97a1e;
+  --warning-soft: #faeccf;
+  --danger: #b4423a;
+  --danger-soft: #f8e0dd;
+  --info: var(--denim);
+  --info-soft: var(--denim-soft);
+
+  /* Fosforlu bant & mıknatıs cetvel */
+  --highlight: rgba(255, 226, 64, 0.5);
+  --highlight-strong: rgba(255, 210, 0, 0.75);
+  --ruler: rgba(70, 105, 138, 0.18);
+  --ruler-edge: #46698a;
+
+  /* Tipografi */
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.25rem;
+
+  /* Ölçüler */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(80, 52, 30, 0.08), 0 1px 1px rgba(80, 52, 30, 0.04);
+  --shadow-md: 0 4px 14px rgba(80, 52, 30, 0.1), 0 1px 3px rgba(80, 52, 30, 0.06);
+  --shadow-lg: 0 14px 40px rgba(80, 52, 30, 0.16), 0 3px 8px rgba(80, 52, 30, 0.08);
+
+  --sidebar-w: 248px;
+  --bottombar-h: 64px;
+  --topbar-h: 56px;
+  --content-max: 1180px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 180ms;
+}
+
+/* Gece örgüsü (koyu tema) — sistem tercihine göre, kullanıcı açığı seçmediyse */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #1c1916;
+    --paper-2: #23201c;
+    --paper-3: #2c2823;
+    --card: #282420;
+    --card-2: #2e2a25;
+    --kraft: #4a3d2b;
+    --kraft-ink: #e7d3b2;
+    --ink: #f2eadf;
+    --ink-2: #cbbfb1;
+    --ink-3: #9a8f83;
+    --line: #3a342e;
+    --line-2: #4a433b;
+    --grid-bg: #24211d;
+    --grid-line: #36424b;
+    --grid-line-strong: #587487;
+    --grid-number: #8eaabd;
+    --terracotta: #dc7559;
+    --terracotta-soft: #4a2c23;
+    --mustard: #e6b450;
+    --mustard-soft: #46391c;
+    --sage: #8fb08f;
+    --sage-soft: #2b3a2c;
+    --plum: #c18bb0;
+    --plum-soft: #3f2a39;
+    --denim: #86a9cb;
+    --denim-soft: #263443;
+    --rose: #dba1a1;
+    --rose-soft: #452e2e;
+    --accent-hover: #e88b70;
+    --accent-ink: #1c1210;
+    --success: #7bbf86;
+    --success-soft: #253a29;
+    --warning: #e2a94a;
+    --warning-soft: #44361b;
+    --danger: #e57d72;
+    --danger-soft: #472826;
+    --highlight: rgba(255, 220, 60, 0.28);
+    --highlight-strong: rgba(255, 210, 0, 0.45);
+    --ruler: rgba(134, 169, 203, 0.2);
+    --ruler-edge: #86a9cb;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #1c1916;
+  --paper-2: #23201c;
+  --paper-3: #2c2823;
+  --card: #282420;
+  --card-2: #2e2a25;
+  --kraft: #4a3d2b;
+  --kraft-ink: #e7d3b2;
+  --ink: #f2eadf;
+  --ink-2: #cbbfb1;
+  --ink-3: #9a8f83;
+  --line: #3a342e;
+  --line-2: #4a433b;
+  --grid-bg: #24211d;
+  --grid-line: #36424b;
+  --grid-line-strong: #587487;
+  --grid-number: #8eaabd;
+  --terracotta: #dc7559;
+  --terracotta-soft: #4a2c23;
+  --mustard: #e6b450;
+  --mustard-soft: #46391c;
+  --sage: #8fb08f;
+  --sage-soft: #2b3a2c;
+  --plum: #c18bb0;
+  --plum-soft: #3f2a39;
+  --denim: #86a9cb;
+  --denim-soft: #263443;
+  --rose: #dba1a1;
+  --rose-soft: #452e2e;
+  --accent-hover: #e88b70;
+  --accent-ink: #1c1210;
+  --success: #7bbf86;
+  --success-soft: #253a29;
+  --warning: #e2a94a;
+  --warning-soft: #44361b;
+  --danger: #e57d72;
+  --danger-soft: #472826;
+  --highlight: rgba(255, 220, 60, 0.28);
+  --highlight-strong: rgba(255, 210, 0, 0.45);
+  --ruler: rgba(134, 169, 203, 0.2);
+  --ruler-edge: #86a9cb;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.5);
+}

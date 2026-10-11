@@ -1,4 +1,16 @@
-# 🧶 İlmek İlmek — Örgü Atölyesi · Ana Plan
+# İlmek İlmek · Ana Plan
+
+> **Güncelleme (yön değişikliği):** Uygulama artık **önce bir eğitim uygulaması**. Kalbi, ihtiyaç listesinden ve ilmek atmadan
+> başlayan, **işaret dili kartları gibi resimli ve hareketli adımlarla** ilerleyen şiş ve tığ dersleri. Her adımda el, şiş/tığ
+> ve ipin **nereden girip nereden çıktığı** oklarla ve kısa animasyonla gösterilir. Kareli kağıt, sayaçlar, hesaplayıcılar ve
+> diğerleri "Atölye araçları" olarak dersleri destekler.
+>
+> - **Yol haritası:** Hazırlık (ücretsiz) → Şiş yolu 5 seviye, Tığ yolu 5 seviye. İlk iki seviye ücretsiz.
+> - **Gelir modeli:** ücretsiz katman (isteğe bağlı, ders akışını bölmeyen reklam) + ucuz, tek seferlik **Usta paketi** (ileri seviyeler
+>   ve araçların gelişmiş özellikleri). Önce web/PWA, ardından aynı kodla Capacitor ile Android/iOS.
+> - **Üslup:** yapay zeka gibi duran her şey kaldırıldı: sihirbaz/parıltı simgeleri, asistan dili, emojiler. Ses bir örgü kitabı gibi
+>   sade ve öğretici. Ayrıntılar: [docs/MIMARI.md](docs/MIMARI.md).
+> - "Model sihirbazı" → **Tarif hazırlayıcı**, "Profesörün notu" → **Usta ipucu**.
 
 > Şiş, misinalı şiş ve tığ için **öğrenme + planlama + örerken takip** uygulaması.
 > Hedef: Kareli kağıt, kurşun kalem, fosforlu bant, mekanik sıra sayacı, ip sepeti defteri ve
