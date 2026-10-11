@@ -8,7 +8,7 @@
 import type { ReactNode } from 'react';
 import { shade } from '@/lib/color';
 import { add, mul, rad, type P } from './geom';
-import { Arrow, Fade, HookLoopBack, HookLoopFront, Move, Hook, Target, Yarn, Tag, type At } from './parts';
+import { Arrow, Badge, Fade, HookLoopBack, HookLoopFront, Move, Hook, Target, Yarn, Tag, type At } from './parts';
 import { YARN } from './theme';
 
 export const CK = {
@@ -74,6 +74,8 @@ export interface CrochetSceneProps {
   loopPart?: 'both' | 'back' | 'front';
   /** hedef ilmekten tığa çekilmiş uzun ilmek (yeni ilmek) */
   pulledLoop?: boolean;
+  /** zincirleri numarala (tığdan itibaren) */
+  numberChains?: boolean;
   arrows?: ReactNode;
   extra?: ReactNode;
   color?: string;
@@ -160,6 +162,7 @@ export function CrochetScene(p: CrochetSceneProps) {
         </g>,
       );
       if (p.chainTarget === i + 1) targetPoint = c;
+      if (p.numberChains) ground.push(<Badge key={`nb${i}`} c={[c[0], c[1] - 26]} n={i + 1} />);
     }
   }
 

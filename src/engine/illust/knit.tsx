@@ -85,6 +85,10 @@ export interface KnitSceneProps {
   color?: string;
   /** çalışan ip ve yeni ilmeğin rengi (öğretici kontrast) */
   yarnColor?: string;
+  /** sol şişteki ilmeklerin renkleri (0 = uca en yakın) */
+  leftColors?: string[];
+  /** kumaşı gösterme (ilmek atma başında) */
+  noFabric?: boolean;
   /** etiketler (çizim içinde el yazısı) */
   labels?: { left?: string; right?: string; yarn?: string };
   /** sağ şiş hiç gösterilmesin */
@@ -166,17 +170,18 @@ export function KnitScene(p: KnitSceneProps) {
       el
     );
 
-  const firstBack = showFirst ? <LoopBack c={first} angle={LN_ANGLE} color={color} {...loopProps} /> : null;
-  const firstFront = showFirst ? <LoopFront c={first} angle={LN_ANGLE} color={color} {...loopProps} /> : null;
+  const lc = (i: number) => p.leftColors?.[i] ?? color;
+  const firstBack = showFirst ? <LoopBack c={first} angle={LN_ANGLE} color={lc(0)} {...loopProps} /> : null;
+  const firstFront = showFirst ? <LoopFront c={first} angle={LN_ANGLE} color={lc(0)} {...loopProps} /> : null;
 
   return (
     <g transform="translate(0 -46)">
       {/* çalışan ip arkadaysa en arkada */}
       {!front && <Yarn d={workYarn} color={ycol} w={K.yarnW} />}
 
-      {fabLoops.length > 0 && <KnitFabric xs={fabLoops.map((c) => c[0])} top={fabTop} rows={3} color={color} kinds={p.leftKinds} sw={K.gap} rh={K.rowH} yw={K.yarnW} slope={slope} />}
+      {!p.noFabric && fabLoops.length > 0 && <KnitFabric xs={fabLoops.map((c) => c[0])} top={fabTop} rows={3} color={color} kinds={p.leftKinds} sw={K.gap} rh={K.rowH} yw={K.yarnW} slope={slope} />}
       {others.map((c, i) => (
-        <LoopBack key={`lb${i}`} c={c} angle={LN_ANGLE} color={color} {...loopProps} />
+        <LoopBack key={`lb${i}`} c={c} angle={LN_ANGLE} color={lc(i + 1)} {...loopProps} />
       ))}
       {drop(firstBack)}
 
@@ -186,7 +191,7 @@ export function KnitScene(p: KnitSceneProps) {
       <Needle base={LN_BASE} tip={LN_TIP} w={K.needleW} />
 
       {others.map((c, i) => (
-        <LoopFront key={`lf${i}`} c={c} angle={LN_ANGLE} color={color} {...loopProps} />
+        <LoopFront key={`lf${i}`} c={c} angle={LN_ANGLE} color={lc(i + 1)} {...loopProps} />
       ))}
 
       {!r.behind && rnMoved}

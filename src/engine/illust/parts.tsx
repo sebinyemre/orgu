@@ -493,12 +493,17 @@ interface HandProps {
   rotate?: number;
   /** sol el için yatay aynala */
   flip?: boolean;
-  /** yarı saydam (arkadaki ip/şiş görünsün) */
-  ghost?: boolean;
+  /** yalnız arka katman (avuç + arkadaki parmaklar) ya da ön katman (öndeki parmaklar) */
+  part?: 'all' | 'back' | 'front';
+  /** bilekte örgü manşet rengi */
+  sleeve?: string;
 }
 
 /** Parmakları kapsül şeklinde çizilen sade el (işaret dili kartlarındaki gibi) */
-export function Hand({ pose, at, scale = 1, rotate = 0, flip, ghost }: HandProps) {
+export function Hand({ pose, at, scale = 1, rotate = 0, flip, part = 'all', sleeve = '#7d9b8c' }: HandProps) {
+  const id = useId().replace(/:/g, '');
+  const { uid } = useScene();
+  const gid = `${uid}sk${id}`;
   const tf = `translate(${pt(at)}) rotate(${rotate}) scale(${flip ? -scale : scale} ${scale})`;
   const finger = (f: FingerPose, i: number) => {
     const d = fingerPath(f);
@@ -509,12 +514,33 @@ export function Hand({ pose, at, scale = 1, rotate = 0, flip, ghost }: HandProps
       </g>
     );
   };
-  return (
-    <g transform={tf} opacity={ghost ? 0.88 : 1}>
+  const sleeveDark = shade(sleeve, -0.25);
+  const back = (
+    <g>
+      <defs>
+        <linearGradient id={gid} x1="-30" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={C.skinShade} stopOpacity={0.55} />
+          <stop offset="0.35" stopColor={C.skin} stopOpacity={0} />
+          <stop offset="1" stopColor={C.skinShade} stopOpacity={0.35} />
+        </linearGradient>
+      </defs>
       {pose.fingers.filter((f) => f.behind).map(finger)}
       <path d={pose.palm} fill={C.skin} stroke={C.skinLine} strokeWidth={2.6} strokeLinejoin="round" />
-      <path d={pose.palm} fill={C.skinShade} opacity={0.25} transform="translate(3 4) scale(0.92)" />
-      {pose.fingers.filter((f) => !f.behind).map(finger)}
+      <path d={pose.palm} fill={`url(#${gid})`} />
+      {/* örgü manşet */}
+      <g>
+        <rect x={-25} y={58} width={50} height={46} rx={8} fill={sleeve} stroke={sleeveDark} strokeWidth={2} />
+        {[-17, -8, 1, 10, 19].map((x) => (
+          <path key={x} d={`M${x} 62 L${x} 100`} stroke={sleeveDark} strokeWidth={2.4} strokeLinecap="round" opacity={0.6} />
+        ))}
+      </g>
+    </g>
+  );
+  const front = <g>{pose.fingers.filter((f) => !f.behind).map(finger)}</g>;
+  return (
+    <g transform={tf}>
+      {part !== 'front' && back}
+      {part !== 'back' && front}
     </g>
   );
 }
