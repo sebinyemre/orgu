@@ -52,7 +52,7 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene({ children, d
     else svg.current.unpauseAnimations();
   }, [paused]);
 
-  const [, , w, h] = viewBox.split(' ').map(Number);
+  const [x0, y0, w, h] = viewBox.split(' ').map(Number);
   return (
     <SceneContext.Provider value={{ uid, dur: realDur, animate, mirrored }}>
       <svg ref={svg} viewBox={viewBox} className={`il-scene ${className ?? ''}`} role="img" aria-label={label}>
@@ -63,10 +63,10 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene({ children, d
                 <path d="M20 0 L0 0 0 20" fill="none" stroke="var(--il-grid)" strokeWidth="1" />
               </pattern>
             </defs>
-            <rect width={w} height={h} fill={`url(#${uid}grid)`} />
+            <rect x={x0} y={y0} width={w} height={h} fill={`url(#${uid}grid)`} />
           </g>
         )}
-        <g transform={mirrored ? `translate(${w} 0) scale(-1 1)` : undefined}>{children}</g>
+        <g transform={mirrored ? `translate(${2 * x0 + w} 0) scale(-1 1)` : undefined}>{children}</g>
       </svg>
     </SceneContext.Provider>
   );

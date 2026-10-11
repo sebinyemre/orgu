@@ -23,13 +23,19 @@ const frontD = (x: number) => `M${x - W / 2 + 2} ${Y} C${x - 30} ${Y + 42} ${x +
 /** ilmeğin gövdesi: tepeden aşağı inen iki bacak */
 const legD = (x: number, side: -1 | 1) => `M${x + side * 10} ${Y + 30} C${x + side * 16} ${Y + 80} ${x + side * 8} ${Y + 120} ${x + side * 14} ${Y + 175}`;
 
-export function LoopsCloseUpScene({ part, n = 1, color = YARN.main }: { part: LoopPart; n?: number; color?: string }) {
+/**
+ * `count` 2 ise tığ yan yana iki ilmeğin ön halkalarının altından birden geçer (görünmez eksiltme).
+ */
+export function LoopsCloseUpScene({ part, n = 1, count = 1, color = YARN.main }: { part: LoopPart; n?: number; count?: 1 | 2; color?: string }) {
+  const targets = count === 2 ? [TARGET, TARGET + 1] : [TARGET];
   const tx = XS[TARGET];
   // tığın ucu: iki halka için arka halkanın ötesinde; yalnız ön halka için iki halkanın arasında
-  const tip: P = part === 'front' ? [tx - 4, Y + 4] : [tx - 4, Y - 40];
-  const angle = 66;
-  const under = (k: 'back' | 'front') => part === 'both' || part === k;
-  const hl = (d: string) => <path d={d} fill="none" stroke={C.highlight} strokeWidth={YW + 14} strokeLinecap="round" opacity={0.4} />;
+  const two = count === 2;
+  const tip: P = two ? [tx - 30, Y + 22] : part === 'front' ? [tx - 4, Y + 4] : [tx - 4, Y - 40];
+  const angle = two ? -6 : 66;
+  const under = (k: 'back' | 'front') => (two ? k === 'front' : part === 'both' || part === k);
+  const isT = (i: number) => targets.includes(i);
+  const hl = (d: string, k: string) => <path key={k} d={d} fill="none" stroke={C.highlight} strokeWidth={YW + 14} strokeLinecap="round" opacity={0.4} />;
   return (
     <g>
       {/* ilmek gövdeleri */}
@@ -40,21 +46,25 @@ export function LoopsCloseUpScene({ part, n = 1, color = YARN.main }: { part: Lo
         </g>
       ))}
       {/* vurgular */}
-      {under('back') && hl(backD(tx))}
-      {under('front') && hl(frontD(tx))}
+      {targets.map((i) => under('back') && hl(backD(XS[i]), `hb${i}`))}
+      {targets.map((i) => under('front') && hl(frontD(XS[i]), `hf${i}`))}
       {/* tepeler: tığın üstünde kalacak iplikler sonra çizilir */}
       {XS.map((x, i) => (
         <g key={`t${x}`}>
-          {!(i === TARGET && under('back')) && <Yarn d={backD(x)} color={color} w={YW} />}
-          {!(i === TARGET && under('front')) && <Yarn d={frontD(x)} color={color} w={YW} />}
+          {!(isT(i) && under('back')) && <Yarn d={backD(x)} color={color} w={YW} />}
+          {!(isT(i) && under('front')) && <Yarn d={frontD(x)} color={color} w={YW} />}
         </g>
       ))}
-      <Move from={[60, 120]} at={[0.1, 0.55]}>
+      <Move from={two ? [120, -10] : [60, 120]} at={[0.1, 0.55]}>
         <Hook tip={tip} angle={angle} length={300} w={16} />
       </Move>
-      {under('back') && <Yarn d={backD(tx)} color={color} w={YW} />}
-      {under('front') && <Yarn d={frontD(tx)} color={color} w={YW} />}
-      <Arrow d={`M${tx - 52} ${Y + 150} C${tx - 48} ${Y + 100} ${tip[0] - 30} ${tip[1] + 40} ${tip[0] - 14} ${tip[1] + 4}`} n={n} start={[tx - 52, Y + 150]} show={[0.55, 0.62]} />
+      {targets.map((i) => under('back') && <Yarn key={`ob${i}`} d={backD(XS[i])} color={color} w={YW} />)}
+      {targets.map((i) => under('front') && <Yarn key={`of${i}`} d={frontD(XS[i])} color={color} w={YW} />)}
+      {two ? (
+        <Arrow d={`M${XS[TARGET + 1] + 60} ${Y + 76} C${XS[TARGET + 1]} ${Y + 80} ${tx} ${Y + 66} ${tip[0] + 4} ${tip[1] + 16}`} n={n} start={[XS[TARGET + 1] + 72, Y + 76]} show={[0.55, 0.62]} />
+      ) : (
+        <Arrow d={`M${tx - 52} ${Y + 150} C${tx - 48} ${Y + 100} ${tip[0] - 30} ${tip[1] + 40} ${tip[0] - 14} ${tip[1] + 4}`} n={n} start={[tx - 52, Y + 150]} show={[0.55, 0.62]} />
+      )}
     </g>
   );
 }

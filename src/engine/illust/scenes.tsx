@@ -275,7 +275,7 @@ export function MagicRingScene({ phase, count = 0 }: { phase: MagicRingPhase; co
       {phase === 'wrap' && <Arrow d={`M${ring[0] + 70} ${ring[1] + 40} C${ring[0] + 90} ${ring[1] - 30} ${ring[0] + 40} ${ring[1] - 80} ${ring[0] - 20} ${ring[1] - 66}`} n={1} start={[ring[0] + 74, ring[1] + 56]} />}
       {phase === 'insert' && <Arrow d={`M${ring[0] + 60} ${ring[1] - 110} C${ring[0] + 10} ${ring[1] - 90} ${ring[0] - 10} ${ring[1] - 30} ${ring[0] - 6} ${ring[1] + 4}`} n={2} start={[ring[0] + 72, ring[1] - 120]} />}
       {phase === 'pull' && <Arrow d={`M${ring[0]} ${ring[1] + 10} C${ring[0] + 4} ${ring[1] - 30} ${ring[0] + 10} ${ring[1] - 50} ${ring[0] + 22} ${ring[1] - 64}`} n={3} start={[ring[0] - 8, ring[1] + 24]} />}
-      {closed && <Arrow d={`M${ring[0] - 10} 300 C${ring[0] - 20} 330 ${ring[0] - 30} 340 ${ring[0] - 30} 360`} n={4} start={[ring[0] + 6, 288]} />}
+      {closed && <Arrow d={`M${ring[0] - 64} ${ring[1] + 30} C${ring[0] - 70} ${ring[1] + 60} ${ring[0] - 62} ${ring[1] + 84} ${ring[0] - 50} 292`} n={4} start={[ring[0] - 62, ring[1] + 18]} />}
       {phase === 'work' && <Target c={ring} r={50} />}
     </g>
   );

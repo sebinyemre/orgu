@@ -18,7 +18,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'İlmek İlmek — Örgü Atölyesi',
+        name: 'İlmek İlmek · Örgü Atölyesi',
         short_name: 'İlmek İlmek',
         description: 'Şiş, misinalı şiş ve tığ için örgü atölyesi: öğren, kareli kağıtta planla, sayaçla takip et.',
         lang: 'tr',

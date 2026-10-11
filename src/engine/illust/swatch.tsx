@@ -8,7 +8,8 @@ import { type P } from './geom';
 import { Arrow, Hook, HookLoopBack, HookLoopFront, LoopBack, LoopFront, Move, Needle, Slide, Fade, Target, Yarn } from './parts';
 import { YARN } from './theme';
 
-export type Cell = 'k' | 'p' | 'yo' | 'ladder' | 'none';
+/** k düz, p ters, yo delik, k2tog sağa yatık, ssk sola yatık, sl iki sıra boyu kaydırılmış, ladder kaçak, none boş */
+export type Cell = 'k' | 'p' | 'yo' | 'k2tog' | 'ssk' | 'sl' | 'ladder' | 'none';
 
 /** Ön yüzden görünüşle örgü örneği; rows[0] en ÜST sıra */
 export function SwatchScene({
@@ -19,9 +20,12 @@ export function SwatchScene({
   origin = [200, 150],
   highlightRow,
   highlightCol,
+  colors,
   extra,
 }: {
   rows: Cell[][];
+  /** hücre renkleri (renkli örgü); verilmeyen hücre `color` */
+  colors?: (string | undefined)[][];
   color?: string;
   cell?: number;
   rowH?: number;
@@ -34,8 +38,6 @@ export function SwatchScene({
   const H = rows.length;
   const x0 = origin[0] - (W * cell) / 2;
   const y0 = origin[1] - (H * rowH) / 2;
-  const dark = shade(color, -0.32);
-  const light = shade(color, 0.24);
   const yw = cell * 0.24;
   const items: ReactNode[] = [];
   for (let r = H - 1; r >= 0; r--) {
@@ -44,15 +46,22 @@ export function SwatchScene({
       const x = x0 + c * cell + cell / 2;
       const y = y0 + r * rowH;
       const key = `${r}-${c}`;
-      if (k === 'k') {
-        const legL = `M${x - cell * 0.42} ${y} C${x - cell * 0.36} ${y + rowH * 0.55} ${x - cell * 0.12} ${y + rowH * 0.95} ${x} ${y + rowH * 1.18}`;
-        const legR = `M${x + cell * 0.42} ${y} C${x + cell * 0.36} ${y + rowH * 0.55} ${x + cell * 0.12} ${y + rowH * 0.95} ${x} ${y + rowH * 1.18}`;
+      const col = colors?.[r]?.[c] ?? color;
+      const dark = shade(col, -0.32);
+      const light = shade(col, 0.24);
+      if (k === 'k' || k === 'k2tog' || k === 'ssk' || k === 'sl') {
+        const top = k === 'sl' ? y - rowH : y;
+        const hh = k === 'sl' ? rowH * 2 : rowH;
+        const legL = `M${x - cell * 0.42} ${top} C${x - cell * 0.36} ${top + hh * 0.55} ${x - cell * 0.12} ${top + hh * 0.95} ${x} ${top + hh * 1.18 - (k === 'sl' ? rowH * 0.2 : 0)}`;
+        const legR = `M${x + cell * 0.42} ${top} C${x + cell * 0.36} ${top + hh * 0.55} ${x + cell * 0.12} ${top + hh * 0.95} ${x} ${top + hh * 1.18 - (k === 'sl' ? rowH * 0.2 : 0)}`;
+        const skew = k === 'k2tog' ? -24 : k === 'ssk' ? 24 : 0;
+        const cy = y + rowH * 0.6;
         items.push(
-          <g key={key}>
+          <g key={key} transform={skew ? `translate(${x} ${cy}) skewX(${skew}) translate(${-x} ${-cy})` : undefined}>
             {[legL, legR].map((d, i) => (
               <g key={i}>
                 <path d={d} stroke={dark} strokeWidth={yw + 2.2} fill="none" strokeLinecap="round" />
-                <path d={d} stroke={color} strokeWidth={yw} fill="none" strokeLinecap="round" />
+                <path d={d} stroke={skew && i === (skew < 0 ? 1 : 0) ? shade(col, 0.1) : col} strokeWidth={yw} fill="none" strokeLinecap="round" />
                 <path d={d} stroke={light} strokeWidth={yw * 0.35} fill="none" strokeLinecap="round" strokeDasharray={`${yw * 0.7} ${yw * 0.9}`} />
               </g>
             ))}
@@ -61,14 +70,14 @@ export function SwatchScene({
       } else if (k === 'p') {
         items.push(
           <g key={key}>
-            <ellipse cx={x} cy={y + rowH * 0.55} rx={cell * 0.5} ry={Math.max(yw * 0.8, rowH * 0.3)} fill={color} stroke={dark} strokeWidth={1.6} />
+            <ellipse cx={x} cy={y + rowH * 0.55} rx={cell * 0.5} ry={Math.max(yw * 0.8, rowH * 0.3)} fill={col} stroke={dark} strokeWidth={1.6} />
             <path d={`M${x - cell * 0.34} ${y + rowH * 0.5} Q${x} ${y + rowH * 0.3} ${x + cell * 0.34} ${y + rowH * 0.5}`} stroke={light} strokeWidth={yw * 0.3} fill="none" />
           </g>,
         );
       } else if (k === 'yo') {
         items.push(<ellipse key={key} cx={x} cy={y + rowH * 0.6} rx={cell * 0.26} ry={rowH * 0.4} fill="var(--il-bg)" stroke={dark} strokeWidth={yw * 0.6} />);
       } else if (k === 'ladder') {
-        items.push(<path key={key} d={`M${x - cell * 0.5} ${y + rowH * 0.6} L${x + cell * 0.5} ${y + rowH * 0.6}`} stroke={color} strokeWidth={yw * 0.8} strokeLinecap="round" />);
+        items.push(<path key={key} d={`M${x - cell * 0.5} ${y + rowH * 0.6} L${x + cell * 0.5} ${y + rowH * 0.6}`} stroke={col} strokeWidth={yw * 0.8} strokeLinecap="round" />);
       }
     }
   }

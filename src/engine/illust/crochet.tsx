@@ -84,7 +84,7 @@ export interface CrochetSceneProps {
 }
 
 /** Bir ilmeğin üst halkaları: arka halka (koyu) ve ön halka; birlikte yatay bir göz gibi görünür */
-function StitchTop({ x, y, color, part = 'both', faded }: { x: number; y: number; color: string; part?: 'both' | 'back' | 'front'; faded?: boolean }) {
+export function StitchTop({ x, y, color, part = 'both', faded }: { x: number; y: number; color: string; part?: 'both' | 'back' | 'front'; faded?: boolean }) {
   const w = CK.st * 0.44;
   const back = `M${x - w} ${y + 1} C${x - w * 0.55} ${y - 11} ${x + w * 0.55} ${y - 11} ${x + w} ${y + 1}`;
   const front = `M${x - w} ${y + 1} C${x - w * 0.55} ${y + 11} ${x + w * 0.55} ${y + 11} ${x + w} ${y + 1}`;
@@ -98,7 +98,7 @@ function StitchTop({ x, y, color, part = 'both', faded }: { x: number; y: number
 }
 
 /** Bir ilmeğin gövdesi: sık iğnede çapraz (X), uzun ilmeklerde dik gövde ve sarım */
-function StitchPost({ x, y0, y1, color, kind = 'sc' }: { x: number; y0: number; y1: number; color: string; kind?: 'sc' | 'hdc' | 'dc' }) {
+export function StitchPost({ x, y0, y1, color, kind = 'sc' }: { x: number; y0: number; y1: number; color: string; kind?: 'sc' | 'hdc' | 'dc' }) {
   const w = CK.st * 0.26;
   if (kind === 'sc') {
     return (

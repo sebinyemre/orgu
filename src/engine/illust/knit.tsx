@@ -24,7 +24,7 @@ const LN_BASE: P = [-60, 168];
 const LN_TIP: P = [246, 152];
 const LN_ANGLE = (Math.atan2(LN_TIP[1] - LN_BASE[1], LN_TIP[0] - LN_BASE[0]) * 180) / Math.PI;
 
-export type RnPose = 'rest' | 'insertK' | 'insertP' | 'pullK' | 'pullP' | 'insertK2' | 'away' | 'beside';
+export type RnPose = 'rest' | 'insertK' | 'insertP' | 'pullK' | 'pullP' | 'insertK2' | 'insertTbl' | 'away' | 'beside';
 
 /** Sağ şiş pozları: uç noktası, uçtan dibe doğru açı, sol şişin arkasında mı */
 export const RN: Record<RnPose, { tip: P; angle: number; behind: boolean }> = {
@@ -32,6 +32,8 @@ export const RN: Record<RnPose, { tip: P; angle: number; behind: boolean }> = {
   beside: { tip: [268, 162], angle: 8, behind: false },
   insertK: { tip: [186, 112], angle: 40, behind: true },
   insertK2: { tip: [150, 112], angle: 34, behind: true },
+  /** arka bacaktan (burgulu): sağdan sola, sol şişin arkasından */
+  insertTbl: { tip: [180, 140], angle: 12, behind: true },
   insertP: { tip: [170, 170], angle: -6, behind: false },
   pullK: { tip: [214, 190], angle: -2, behind: false },
   pullP: { tip: [196, 128], angle: 34, behind: true },
@@ -72,12 +74,16 @@ export interface KnitSceneProps {
   /** sağ şişe sarılan ip */
   wrap?: 'k' | 'p';
   wrapDraw?: At;
-  /** sağ şiş ucundaki yeni ilmek */
-  newLoop?: 'k' | 'p';
+  /** sağ şiş ucundaki yeni ilmek ('yo': şişin üstünden atılmış ip) */
+  newLoop?: 'k' | 'p' | 'yo';
+  /** yeni ilmeğin rengi (kaydırılan ilmek kumaş renginde görünür) */
+  newLoopColor?: string;
   /** sol şişteki ilk ilmek düşüyor */
   dropping?: At;
+  /** kaç ilmek birlikte düşer (2 birlikte örmede 2) */
+  dropN?: number;
   dropped?: boolean;
-  target?: boolean | number;
+  target?: boolean | number | number[];
   leftKinds?: ('k' | 'p')[];
   rightKinds?: ('k' | 'p')[];
   arrows?: ReactNode;
@@ -93,9 +99,11 @@ export interface KnitSceneProps {
   labels?: { left?: string; right?: string; yarn?: string };
   /** sağ şiş hiç gösterilmesin */
   noRight?: boolean;
+  /** sol şişteki ilk ilmeğin üstünde atılmış ip (selanik: ilmek ve ip birlikte) */
+  leftYo?: boolean;
 }
 
-function RightNeedle({ pose, right, color, ycol, kinds, newLoop }: { pose: RnPose; right: number; color: string; ycol: string; kinds?: ('k' | 'p')[]; newLoop?: 'k' | 'p' }) {
+function RightNeedle({ pose, right, color, ycol, kinds, newLoop }: { pose: RnPose; right: number; color: string; ycol: string; kinds?: ('k' | 'p')[]; newLoop?: 'k' | 'p' | 'yo' }) {
   const r = RN[pose];
   const base = add(r.tip, mul(dirOf(r.angle), K.needleLen));
   const ha = hangAngle(r.angle);
@@ -112,12 +120,12 @@ function RightNeedle({ pose, right, color, ycol, kinds, newLoop }: { pose: RnPos
       {loops.map((c, j) => (
         <LoopBack key={`b${j}`} c={c} angle={ha} color={color} {...loopProps} />
       ))}
-      {nc && <LoopBack c={nc} angle={ha} color={ycol} {...loopProps} h={K.loopH * 0.7} />}
+      {nc && <LoopBack c={nc} angle={ha} color={ycol} {...loopProps} h={K.loopH * (newLoop === 'yo' ? 0.42 : 0.7)} />}
       <Needle base={base} tip={r.tip} w={K.needleW} />
       {loops.map((c, j) => (
         <LoopFront key={`f${j}`} c={c} angle={ha} color={color} {...loopProps} />
       ))}
-      {nc && <LoopFront c={nc} angle={ha} color={ycol} {...loopProps} h={K.loopH * 0.7} />}
+      {nc && <LoopFront c={nc} angle={ha} color={ycol} {...loopProps} h={K.loopH * (newLoop === 'yo' ? 0.42 : 0.7)} />}
     </g>
   );
 }
@@ -132,8 +140,10 @@ export function KnitScene(p: KnitSceneProps) {
   const r = RN[pose];
 
   const leftLoops = Array.from({ length: left }, (_, i) => leftLoopAt(i));
+  const dropN = Math.min(p.dropN ?? 1, left);
   const first = leftLoops[0];
-  const others = leftLoops.slice(1);
+  const firsts = leftLoops.slice(0, dropN);
+  const others = leftLoops.slice(dropN);
   const showFirst = left > 0 && !p.dropped;
   const fabLoops = p.dropped ? others : leftLoops;
   const fabTop = fabLoops.length ? Math.max(...fabLoops.map((c) => c[1])) + K.loopH - 6 : 0;
@@ -148,7 +158,7 @@ export function KnitScene(p: KnitSceneProps) {
     ? `M${yStart[0]} ${yStart[1]} C${yStart[0] - 4} ${yStart[1] + 40} ${yStart[0] + 40} ${yStart[1] + 80} ${yStart[0] + 90} ${380}`
     : `M${yStart[0]} ${yStart[1]} C${yStart[0] + 30} ${yStart[1] + 16} ${yStart[0] + 70} ${yStart[1] + 60} ${yStart[0] + 120} ${380}`;
 
-  const rnEl = p.noRight ? null : <RightNeedle pose={pose} right={right} color={color} ycol={ycol} kinds={p.rightKinds} newLoop={p.newLoop} />;
+  const rnEl = p.noRight ? null : <RightNeedle pose={pose} right={right} color={color} ycol={p.newLoopColor ?? ycol} kinds={p.rightKinds} newLoop={p.newLoop} />;
   const fromPose = p.rnFrom ? RN[p.rnFrom] : null;
   const rnMoved = rnEl && fromPose ? (
     <Move from={[fromPose.tip[0] - r.tip[0], fromPose.tip[1] - r.tip[1]]} at={p.rnAt ?? [0.08, 0.55]}>
@@ -171,8 +181,20 @@ export function KnitScene(p: KnitSceneProps) {
     );
 
   const lc = (i: number) => p.leftColors?.[i] ?? color;
-  const firstBack = showFirst ? <LoopBack c={first} angle={LN_ANGLE} color={lc(0)} {...loopProps} /> : null;
-  const firstFront = showFirst ? <LoopFront c={first} angle={LN_ANGLE} color={lc(0)} {...loopProps} /> : null;
+  const firstBack = showFirst ? (
+    <g>
+      {firsts.map((c, i) => (
+        <LoopBack key={i} c={c} angle={LN_ANGLE} color={lc(i)} {...loopProps} />
+      ))}
+    </g>
+  ) : null;
+  const firstFront = showFirst ? (
+    <g>
+      {firsts.map((c, i) => (
+        <LoopFront key={i} c={c} angle={LN_ANGLE} color={lc(i)} {...loopProps} />
+      ))}
+    </g>
+  ) : null;
 
   return (
     <g transform="translate(0 -46)">
@@ -181,7 +203,7 @@ export function KnitScene(p: KnitSceneProps) {
 
       {!p.noFabric && fabLoops.length > 0 && <KnitFabric xs={fabLoops.map((c) => c[0])} top={fabTop} rows={3} color={color} kinds={p.leftKinds} sw={K.gap} rh={K.rowH} yw={K.yarnW} slope={slope} />}
       {others.map((c, i) => (
-        <LoopBack key={`lb${i}`} c={c} angle={LN_ANGLE} color={lc(i + 1)} {...loopProps} />
+        <LoopBack key={`lb${i}`} c={c} angle={LN_ANGLE} color={lc(i + dropN)} {...loopProps} />
       ))}
       {drop(firstBack)}
 
@@ -191,16 +213,21 @@ export function KnitScene(p: KnitSceneProps) {
       <Needle base={LN_BASE} tip={LN_TIP} w={K.needleW} />
 
       {others.map((c, i) => (
-        <LoopFront key={`lf${i}`} c={c} angle={LN_ANGLE} color={lc(i + 1)} {...loopProps} />
+        <LoopFront key={`lf${i}`} c={c} angle={LN_ANGLE} color={lc(i + dropN)} {...loopProps} />
       ))}
 
       {!r.behind && rnMoved}
       {!r.behind && wrapEl}
       {drop(firstFront)}
+      {p.leftYo && first && drop(
+        <g>
+          <LoopFront c={add(first, [3, -2])} angle={LN_ANGLE} color={ycol} {...loopProps} w={K.loopW * 1.1} h={K.loopH * 0.45} />
+        </g>,
+      )}
 
       {front && <Yarn d={workYarn} color={ycol} w={K.yarnW} />}
 
-      {p.target !== undefined && p.target !== false && <Target c={leftLoopAt(typeof p.target === 'number' ? p.target : 0)} r={24} />}
+      {p.target !== undefined && p.target !== false && (Array.isArray(p.target) ? p.target : [typeof p.target === 'number' ? p.target : 0]).map((i) => <Target key={i} c={leftLoopAt(i)} r={24} />)}
       {p.labels?.left && <Tag c={[60, 116]} text={p.labels.left} />}
       {p.labels?.right && <Tag c={[350, 126]} text={p.labels.right} />}
       {p.labels?.yarn && <Tag c={[yStart[0] + 96, 286]} text={p.labels.yarn} anchor="end" />}
