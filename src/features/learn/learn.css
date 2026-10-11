@@ -1,0 +1,491 @@
+/* ── Ders oynatıcı (tam ekran) ───────────────────────── */
+.lesson {
+  --path-color: var(--terracotta);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+.lesson[data-path='tig'] {
+  --path-color: var(--sage);
+}
+.lesson[data-path='hazirlik'] {
+  --path-color: var(--mustard);
+}
+.lesson-top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: calc(var(--space-2) + env(safe-area-inset-top)) var(--space-3) var(--space-2);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+.lesson-bar {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+.lesson-bar span {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--paper-3);
+  transition: background 300ms var(--ease);
+}
+.lesson-bar span[data-on='true'] {
+  background: var(--path-color);
+}
+.lesson-count {
+  min-width: 52px;
+  text-align: right;
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.lesson-body {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4) calc(var(--space-7) + 40px);
+}
+.lesson-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+.lesson-lock {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--mustard-soft);
+  color: var(--warning);
+}
+.lesson-lock svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* giriş */
+.lesson-intro {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+}
+.lesson-intro h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+}
+.lesson-lede {
+  font-size: var(--fs-lg);
+  color: var(--ink-2);
+  margin: 0;
+  line-height: 1.6;
+}
+.lesson-needs h3 {
+  font-size: var(--fs-lg);
+  margin: var(--space-3) 0 var(--space-2);
+}
+.lesson-needs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-2);
+}
+.lesson-needs li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+.lesson-needs li svg {
+  flex: none;
+}
+.lesson-actions {
+  margin-top: var(--space-4);
+}
+
+/* adım */
+.lesson-step {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  animation: lesson-in 260ms var(--ease);
+}
+@keyframes lesson-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+.lesson-figure {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: var(--space-2);
+  box-shadow: var(--shadow-sm);
+  touch-action: pan-y;
+  user-select: none;
+}
+.lesson-figure.small-figure {
+  max-width: 420px;
+}
+.lesson-loops {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: var(--fs-sm);
+}
+.lesson-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.lesson-text h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+.lesson-text p {
+  margin: 0;
+  font-size: var(--fs-lg);
+  line-height: 1.65;
+}
+.lesson-stepno {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--path-color);
+  color: #fffaf5;
+  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+@media (min-width: 900px) {
+  .lesson-step {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-top: var(--space-5);
+  }
+  .lesson-text {
+    padding-top: var(--space-3);
+  }
+}
+
+.lesson-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+.lesson-nav .btn-primary {
+  --btn-bg: var(--path-color);
+  --btn-bd: var(--path-color);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--path-color) 60%, black);
+}
+@media (max-width: 520px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+/* alıştırma */
+.lesson-practice,
+.lesson-quiz,
+.lesson-done {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+}
+.practice-tap {
+  border: 0;
+  background: var(--card);
+  border-radius: 50%;
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform 90ms var(--ease);
+  --accent: var(--path-color);
+}
+.practice-tap:active {
+  transform: scale(0.96);
+}
+.practice-tap.is-done {
+  box-shadow:
+    0 0 0 4px var(--success-soft),
+    var(--shadow-md);
+}
+
+/* sınav */
+.lesson-quiz {
+  align-items: stretch;
+  text-align: left;
+}
+.lesson-quiz h2 {
+  margin: 0;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.quiz-option {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--line-2);
+  background: var(--card);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--path-color);
+}
+.quiz-option[data-state='right'] {
+  border-color: var(--success);
+  background: var(--success-soft);
+}
+.quiz-option[data-state='wrong'] {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+}
+.quiz-option:disabled {
+  cursor: default;
+  color: var(--ink);
+}
+
+.lesson-done h1 {
+  margin: 0;
+}
+
+/* ── Ders yolu (ana sayfa) ───────────────────────────── */
+.path-tabs {
+  margin-bottom: var(--space-4);
+}
+.path-level {
+  margin-bottom: var(--space-6);
+}
+.path-level-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+.path-level-head h3 {
+  margin: 0;
+  font-size: var(--fs-xl);
+}
+.path-level-head .muted {
+  margin: 2px 0 0;
+  font-size: var(--fs-sm);
+}
+.path-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.path-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.path-node:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.path-node[data-state='done'] {
+  background: color-mix(in srgb, var(--path-color) 7%, var(--card));
+}
+.path-node[data-state='current'] {
+  border-color: var(--path-color);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--path-color) 22%, transparent),
+    var(--shadow-sm);
+}
+.path-node[data-state='locked'] {
+  opacity: 0.72;
+}
+.path-node-ball {
+  position: relative;
+  flex: none;
+}
+.path-node-ball .check {
+  position: absolute;
+  right: -2px;
+  bottom: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--success);
+  color: #fff;
+  border: 2px solid var(--card);
+}
+.path-node-ball .check svg {
+  width: 12px;
+  height: 12px;
+}
+.path-node-title {
+  font-weight: 800;
+  line-height: 1.25;
+}
+.path-node-sub {
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+.path-node-meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.path-node-meta svg {
+  width: 16px;
+  height: 16px;
+}
+@media (min-width: 720px) {
+  .path-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .path-track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.learn-hero {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-5);
+}
+@media (min-width: 860px) {
+  .learn-hero {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+.continue-card {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+.continue-card .grow h3 {
+  margin: 2px 0 4px;
+}
+.path-pick {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+.path-pick button {
+  border: 2px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.path-pick button[aria-pressed='true'] {
+  border-color: var(--pc);
+  background: color-mix(in srgb, var(--pc) 10%, var(--card));
+}
+.path-pick .sub {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+/* Usta paketi */
+.pro-card {
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 10px, rgba(255, 255, 255, 0.05) 10px 14px),
+    var(--kraft);
+  color: var(--kraft-ink);
+  border: 0;
+}
+.pro-card h2 {
+  color: var(--kraft-ink);
+}
+.pro-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.pro-features li {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  font-weight: 700;
+}
+.pro-features svg {
+  flex: none;
+  color: var(--success);
+  margin-top: 3px;
+}

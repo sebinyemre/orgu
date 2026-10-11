@@ -25,6 +25,7 @@ const ProjectPage = p(() => import('@/features/projects/ProjectPage'));
 const StashPage = p(() => import('@/features/stash/StashPage'));
 const ColorStudioPage = p(() => import('@/features/colors/ColorStudioPage'));
 const SettingsPage = p(() => import('@/features/settings/SettingsPage'));
+const IllustLab = p(() => import('@/features/learn/IllustLab'));
 
 export const routes: RouteObject[] = [
   {
@@ -52,6 +53,7 @@ export const routes: RouteObject[] = [
       { path: '/renk', element: <ColorStudioPage /> },
       { path: '/renk/:toolId', element: <ColorStudioPage /> },
       { path: '/ayarlar', element: <SettingsPage /> },
+      ...(import.meta.env.DEV ? [{ path: '/lab', element: <IllustLab /> }] : []),
       { path: '*', element: <NotFound /> },
     ],
   },

@@ -1,0 +1,60 @@
+/* Resimli adım motoru renkleri ve sahne çerçevesi */
+:root {
+  --il-bg: #fffdf8;
+  --il-grid: rgba(70, 105, 138, 0.09);
+  --il-ink: #3b2f27;
+  --il-ink-soft: #7b6a5d;
+  --il-arrow: #c2412d;
+  --il-arrow-2: #2f6f8f;
+  --il-highlight: #e0a100;
+  --il-skin: #f3d2b8;
+  --il-skin-shade: #d9a988;
+  --il-skin-line: #8a5a3e;
+  --il-needle: #b9c3cc;
+  --il-needle-shade: #7c8893;
+  --il-needle-light: #f4f7fa;
+  --il-hook: #5aa6a0;
+  --il-hook-shade: #2f716c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --il-bg: #2a2621;
+    --il-grid: rgba(134, 169, 203, 0.1);
+    --il-ink: #1a1512;
+    --il-ink-soft: #b8a999;
+    --il-arrow: #ff7a5c;
+    --il-arrow-2: #6cb6d9;
+    --il-highlight: #ffc933;
+  }
+}
+:root[data-theme='dark'] {
+  --il-bg: #2a2621;
+  --il-grid: rgba(134, 169, 203, 0.1);
+  --il-ink: #1a1512;
+  --il-ink-soft: #b8a999;
+  --il-arrow: #ff7a5c;
+  --il-arrow-2: #6cb6d9;
+  --il-highlight: #ffc933;
+}
+
+.il-scene {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--il-bg);
+  border-radius: var(--radius-md);
+  touch-action: manipulation;
+}
+.il-flow {
+  animation: il-flow 0.9s linear infinite;
+}
+@keyframes il-flow {
+  to {
+    stroke-dashoffset: -14;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .il-flow {
+    animation: none;
+  }
+}
